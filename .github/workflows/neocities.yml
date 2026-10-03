@@ -1,0 +1,60 @@
+name: Publish Pitt Prelim Study to Neocities
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: neocities-pitt-prelim-study
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Download study app from GitHub
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Check deployment secret
+        env:
+          NEOCITIES_API_TOKEN: ${{ secrets.NEOCITIES_API_TOKEN }}
+        shell: bash
+        run: |
+          if [ -z "$NEOCITIES_API_TOKEN" ]; then
+            echo "::error::Add the NEOCITIES_API_TOKEN repository secret in Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+      - name: Prepare study app subdirectory
+        shell: bash
+        run: |
+          destination=public/pitt-prelim-study
+          mkdir -p "$destination"
+          for file in index.html app.js math-config.js progress.mjs styles.css; do
+            test -f "$file"
+            cp -- "$file" "$destination/"
+          done
+          for directory in data exams vendor; do
+            test -d "$directory"
+            cp -R -- "$directory" "$destination/"
+          done
+          for dataset in problems exams library audit; do
+            test -f "$destination/data/$dataset.json"
+          done
+          test -f "$destination/vendor/tex-svg-full.js"
+
+      - name: Publish study app
+        uses: bcomnes/deploy-to-neocities@v3
+        with:
+          api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
+          dist_dir: public
+          neocities_supporter: true
+          cleanup: false
+          preview_before_deploy: true
