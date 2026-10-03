@@ -1,0 +1,1 @@
+window.MathJax = {loader:{load:[]},tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']],packages:{'[+]':['ams','newcommand','textmacros']},maxBuffer:100000},svg:{fontCache:'local'},options:{enableMenu:false},startup:{typeset:false}};

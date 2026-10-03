@@ -1,0 +1,1237 @@
+{
+  "schemaVersion": 1,
+  "modules": [
+    {
+      "id": "metric",
+      "subject": "analysis",
+      "title": "Metric spaces and compactness",
+      "aim": "Use covers, sequences and completeness precisely.",
+      "keywords": "metric,compact,closed,open,continuity,connected,distance,cauchy,complete,heine,bolzano",
+      "prerequisites": []
+    },
+    {
+      "id": "sequences",
+      "subject": "analysis",
+      "title": "Sequences and numerical series",
+      "aim": "Choose convergence tests and control tails.",
+      "keywords": "sequence,series,comparison,liminf,limsup,geometric,telescope,monotone,integral test",
+      "prerequisites": [
+        "metric"
+      ]
+    },
+    {
+      "id": "differentiation",
+      "subject": "analysis",
+      "title": "Differentiation and Taylor estimates",
+      "aim": "Turn local information into a uniform remainder bound.",
+      "keywords": "taylor,mean value,fermat,derivative,differentiation,l hospital,rolle",
+      "prerequisites": [
+        "sequences"
+      ]
+    },
+    {
+      "id": "function-series",
+      "subject": "analysis",
+      "title": "Uniform convergence and function spaces",
+      "aim": "Separate pointwise limits from uniform estimates.",
+      "keywords": "uniform,equicontinu,ascoli,dini,holder,power series,m-test,function space",
+      "prerequisites": [
+        "metric",
+        "sequences"
+      ]
+    },
+    {
+      "id": "approximation",
+      "subject": "analysis",
+      "title": "Polynomial approximation",
+      "aim": "Use a uniform margin and compactness.",
+      "keywords": "weierstrass approximation,stone,weierstrass,bernstein",
+      "prerequisites": [
+        "function-series"
+      ]
+    },
+    {
+      "id": "integration",
+      "subject": "analysis",
+      "title": "Riemann integration and null sets",
+      "aim": "Justify integrability, limiting operations and negligible sets.",
+      "keywords": "riemann,darboux,integral,measure zero,null,lebesgue criterion,fubini",
+      "prerequisites": [
+        "differentiation",
+        "function-series"
+      ]
+    },
+    {
+      "id": "multivariable",
+      "subject": "analysis",
+      "title": "Several variables and local inverses",
+      "aim": "Select the correct derivative and prove local or global conclusions.",
+      "keywords": "frechet,chain rule,hessian,jacobian,inverse function,implicit,level set,lagrange,multivariable",
+      "prerequisites": [
+        "differentiation"
+      ]
+    },
+    {
+      "id": "vector",
+      "subject": "analysis",
+      "title": "Change of variables and vector analysis",
+      "aim": "Track Jacobians, singularities and boundary orientation.",
+      "keywords": "green,stokes,divergence,flux,curl,change of variable,polar,surface,differential form",
+      "prerequisites": [
+        "integration",
+        "multivariable"
+      ]
+    },
+    {
+      "id": "spaces",
+      "subject": "linear algebra",
+      "title": "Vector spaces and linear maps",
+      "aim": "Use bases, kernels, ranges and invariant subspaces.",
+      "keywords": "basis,independence,rank,nullity,subspace,dimension,direct sum,linear map,linear transformation,quotient",
+      "prerequisites": []
+    },
+    {
+      "id": "dual",
+      "subject": "linear algebra",
+      "title": "Dual spaces and adjoints",
+      "aim": "Keep algebraic annihilators distinct from orthogonal complements.",
+      "keywords": "dual,functional,annihilator,adjoint",
+      "prerequisites": [
+        "spaces"
+      ]
+    },
+    {
+      "id": "determinants",
+      "subject": "linear algebra",
+      "title": "Determinants and matrix identities",
+      "aim": "Check sizes and multiplication order before canceling.",
+      "keywords": "determinant,trace,cofactor,adjugate,vandermonde,schur complement,kronecker",
+      "prerequisites": [
+        "spaces"
+      ]
+    },
+    {
+      "id": "inner",
+      "subject": "linear algebra",
+      "title": "Inner products and orthogonality",
+      "aim": "Prove projection and equality cases using quadratic forms.",
+      "keywords": "inner product,orthogonal,projection,cauchy,gram,unitary,isometr,polarization",
+      "prerequisites": [
+        "spaces",
+        "dual"
+      ]
+    },
+    {
+      "id": "spectrum",
+      "subject": "linear algebra",
+      "title": "Eigenvalues and spectral theory",
+      "aim": "Distinguish eigenvalue information from an eigenbasis.",
+      "keywords": "spectral,eigenvalue,eigenvector,rayleigh,minimax,min-max,gershgorin,schur triangular",
+      "prerequisites": [
+        "inner",
+        "determinants"
+      ]
+    },
+    {
+      "id": "jordan",
+      "subject": "linear algebra",
+      "title": "Minimal polynomials and Jordan form",
+      "aim": "Recover chains from kernels of powers.",
+      "keywords": "jordan,minimal,characteristic,cayley,nilpotent,cyclic,commut,diagonaliz,similar",
+      "prerequisites": [
+        "spaces",
+        "spectrum"
+      ]
+    },
+    {
+      "id": "positive",
+      "subject": "linear algebra",
+      "title": "Positive matrices, SVD and polar form",
+      "aim": "Use congruence rather than unjustified simultaneous diagonalization.",
+      "keywords": "positive,singular value,svd,polar,square root,hermitian,symmetric",
+      "prerequisites": [
+        "inner",
+        "spectrum"
+      ]
+    },
+    {
+      "id": "norms",
+      "subject": "linear algebra",
+      "title": "Matrix norms, powers and exponentials",
+      "aim": "Choose an induced norm and control polynomial growth.",
+      "keywords": "norm,matrix power,exponential,neumann,converg,stability,spectral radius",
+      "prerequisites": [
+        "jordan",
+        "positive"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "metric-definitions",
+      "module": "metric",
+      "title": "Open sets, closed sets and convergence",
+      "kind": "definition",
+      "statement": "A metric is a nonnegative symmetric distance separating points and satisfying the triangle inequality. A set is open if each of its points contains a ball within the set; it is closed if its complement is open. A sequence converges to \\(x\\) when every ball about \\(x\\) contains its tail.",
+      "proof": "A set is closed exactly when it contains every limit of a convergent sequence of its points. For a closed set, a limit outside it has a ball in the open complement, contradicting convergence. Conversely, if a set is not closed, a point of its closure outside it can be approximated by points of the set within \\(1/n\\). The distance-to-set function is one-Lipschitz: the triangle inequality followed by taking infima gives \\(d(x,E)\\le d(x,y)+d(y,E)\\), and swapping \\(x,y\\) gives the absolute difference bound.",
+      "method": "Use sequences to test closedness in metric spaces, and balls to produce quantitative neighborhoods.",
+      "pitfall": "Distance to an empty set is not a finite real-valued function.",
+      "definitions": [
+        {
+          "question": "What is closure?",
+          "answer": "\\(\\overline E=\\{x: B(x,r)\\cap E\\ne\\varnothing\\text{ for every }r>0\\}\\)."
+        },
+        {
+          "question": "What is a Cauchy sequence?",
+          "answer": "For every \\(\\varepsilon>0\\), some \\(N\\) gives \\(d(x_m,x_n)<\\varepsilon\\) for all \\(m,n\\ge N\\)."
+        },
+        {
+          "question": "What is continuity in metric spaces?",
+          "answer": "For each \\(x\\) and \\(\\varepsilon >0\\), some \\(\\delta >0\\) makes \\(d(x,y)<\\delta \\) imply \\(d(f(x),f(y))<\\varepsilon \\)."
+        },
+        {
+          "question": "What is uniform continuity?",
+          "answer": "For each \\(\\varepsilon >0\\) one \\(\\delta >0\\) works for all pairs \\(x\\),\\(y\\) in the domain."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "compactness",
+      "module": "metric",
+      "title": "Compactness and sequential compactness",
+      "kind": "theorem",
+      "statement": "For a metric space, compactness (every open cover has a finite subcover) is equivalent to sequential compactness, and to completeness plus total boundedness.",
+      "proof": "Compactness implies every infinite sequence has a cluster point: otherwise each point has a neighborhood containing only finitely many sequence terms; a finite subcover is impossible. Choosing successively terms in radius \\(1/k\\) balls about a cluster point gives a convergent subsequence. Sequential compactness implies total boundedness, since failure at radius \\(\\varepsilon\\) constructs an \\(\\varepsilon\\)-separated sequence. It also implies completeness: a Cauchy sequence with a convergent subsequence converges to that limit. Conversely, successively cover a totally bounded space by finitely many balls of radii \\(2^{-k}\\), keeping an infinite subsequence in one ball at each stage. The diagonal sequence is Cauchy and converges by completeness. Finally sequential compactness gives compactness: any open cover has a Lebesgue number, since otherwise choose points whose radius \\(1/n\\) balls lie in no member and take a convergent subsequence, contradicting an open member at the limit. A finite net at half that Lebesgue number supplies a finite subcover.",
+      "method": "When taking subsequences of multiple bounded quantities, retain one common nested subsequence.",
+      "pitfall": "Closed and bounded implies compact only in settings such as finite-dimensional Euclidean space.",
+      "definitions": [
+        {
+          "question": "What is total boundedness?",
+          "answer": "For every \\(\\varepsilon>0\\), finitely many radius-\\(\\varepsilon\\) balls cover the space."
+        },
+        {
+          "question": "What is completeness?",
+          "answer": "Every Cauchy sequence converges to a point of the space."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "heine-borel",
+      "module": "metric",
+      "title": "Heine–Borel and Bolzano–Weierstrass",
+      "kind": "theorem",
+      "statement": "A subset of \\(\\mathbb R^n\\) is compact exactly when it is closed and bounded. Every bounded sequence in \\(\\mathbb R^n\\) has a convergent subsequence.",
+      "proof": "A closed Euclidean subset is complete: coordinate Cauchy sequences have real limits and closedness keeps the limit in the set. A bounded subset is totally bounded, since a large containing box has a finite subdivision into cubes of arbitrarily small diameter. The metric compactness criterion proves the forward conclusion for closed bounded sets. Conversely, compact sets are bounded by a finite subcover of the increasing origin-centered balls. They are closed because for a point outside the compact set, the positive distances to its points yield a finite ball cover and a positive separating radius. A bounded sequence lies in a compact closed box and therefore has a convergent subsequence.",
+      "method": "Use this to justify existence of limits and extrema, including unit spheres and matrix groups.",
+      "pitfall": "An open bounded set need not be compact.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "continuous-compact",
+      "module": "metric",
+      "title": "Continuous images and extrema",
+      "kind": "theorem",
+      "statement": "A continuous image of a compact space is compact. A real continuous function on a nonempty compact space attains its maximum and minimum, and is uniformly continuous.",
+      "proof": "Pull back an open cover of the image to the domain and choose a finite subcover. A compact subset of \\(\\mathbb R\\) is bounded and closed, so its supremum and infimum belong to it; this proves attainment. If uniform continuity failed, there would be \\(x_n,y_n\\) with \\(d(x_n,y_n)\\to0\\) but \\(|f(x_n)-f(y_n)|\\ge\\varepsilon\\). A convergent subsequence of \\(x_n\\) has limit \\(x\\), and the corresponding \\(y_n\\) also tends to \\(x\\). Continuity contradicts the value separation.",
+      "method": "Check nonemptiness before saying an extremum is attained. Compactness turns pointwise control into uniform control.",
+      "pitfall": "Continuity on an open bounded interval need not imply uniform continuity.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "connectedness",
+      "module": "metric",
+      "title": "Connectedness and the intermediate value theorem",
+      "kind": "theorem",
+      "statement": "A space is connected when it has no separation into two disjoint nonempty relatively open sets. Continuous images of connected spaces are connected. Connected subsets of \\(\\mathbb R\\) are intervals.",
+      "proof": "A separation of a continuous image pulls back to a separation of the domain. If a real subset contains \\(a<b\\) but omits an intermediate \\(c\\), intersecting it with the two open half-lines at \\(c\\) separates it. Conversely, an interval cannot have a separation: select one point in each piece, take the supremum of the first piece to the left inside their connecting interval, and openness at the supremum in either piece contradicts its defining property. Thus the image of an interval under a continuous real function contains every intermediate value. A path-connected space is connected because a separation would pull back along a path to a separation of its parameter interval.",
+      "method": "Use one fixed intermediate value across a convergent sequence of small intervals.",
+      "pitfall": "Connected does not mean path connected in arbitrary metric spaces.",
+      "definitions": [
+        {
+          "question": "What is path connectedness?",
+          "answer": "Any two points can be joined by a continuous map from \\([0,1]\\) with those endpoint values."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "contraction",
+      "module": "metric",
+      "title": "Banach contraction principle",
+      "kind": "theorem",
+      "statement": "If \\(T:X\\to X\\) satisfies \\(d(Tx,Ty)\\le qd(x,y)\\), \\(0\\le q<1\\), on a nonempty complete metric space, it has exactly one fixed point, and iteration from any point converges to it.",
+      "proof": "Put \\(x_{n+1}=Tx_n\\). Successive differences obey \\(d(x_{n+1},x_n)\\le q^n d(x_1,x_0)\\). Summing the geometric tail gives \\(d(x_m,x_n)\\le q^n d(x_1,x_0)/(1-q)\\) for \\(m>n\\). Completeness gives \\(x_n\\to a\\). The Lipschitz estimate makes \\(T\\) continuous, so \\(Ta=a\\). Two fixed points satisfy \\(d(a,b)\\le qd(a,b)\\), hence coincide. Letting \\(m\\to\\infty\\) in the tail estimate gives the error bound. If an iterate \\(f^N\\) is a contraction, its fixed point is also fixed by \\(f\\), since \\(f\\) carries it to another fixed point of \\(f^N\\). For convergence of all iterates, write \\(n=kN+r\\) and estimate each of the finitely many residue classes by the contraction.",
+      "method": "Identify the complete space, prove the map stays in it, then compute a strict constant below one.",
+      "pitfall": "Local derivative control must hold throughout the chosen invariant set.",
+      "definitions": [],
+      "visual": "contraction"
+    },
+    {
+      "id": "monotone-sequences",
+      "module": "sequences",
+      "title": "Monotone convergence and limsup",
+      "kind": "theorem",
+      "statement": "An increasing real sequence bounded above converges to its supremum. For a bounded sequence, \\(\\limsup a_n=\\lim_N\\sup_{n\\ge N}a_n\\), and similarly for liminf.",
+      "proof": "If \\(s=\\sup_n a_n\\), every \\(\\varepsilon>0\\) has some \\(a_N>s-\\varepsilon\\); monotonicity places the entire tail in \\((s-\\varepsilon,s]\\). Tail suprema decrease and are bounded, proving existence of limsup. Choose increasingly late terms within \\(1/k\\) of the appropriate tail supremum; after also making those suprema close to their limit, these terms converge to limsup. The analogous argument gives a liminf subsequence. For an array increasing in both indices and bounded above, both iterated limits equal the supremum over all index pairs.",
+      "method": "Take a liminf-attaining subsequence before invoking compactness on a family with variable constants.",
+      "pitfall": "An arbitrary interchange of two limits requires justification.",
+      "definitions": [
+        {
+          "question": "What is the Cauchy criterion for a series?",
+          "answer": "For every \\(\\varepsilon >0\\), all sufficiently late finite tails have modulus below \\(\\varepsilon\\)."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "series-tests",
+      "module": "sequences",
+      "title": "Comparison, ratio, root and integral tests",
+      "kind": "theorem",
+      "statement": "Positive series obey direct comparison. A series is absolutely convergent if the root or ratio limsup is below one. For nonnegative decreasing \\(h\\), its sum and improper integral differ by at most the first interval contribution.",
+      "proof": "For nonnegative terms, partial sums increase, so convergence is equivalent to boundedness; comparison preserves that bound. If eventually \\(|a_n|^{1/n}\\le q<1\\), geometric comparison proves the root test. If eventually \\(|a_{n+1}/a_n|\\le q<1\\), induction gives the same geometric bound from one initial index, proving the ratio test. A root limsup above one prevents terms from tending to zero; a ratio limit above one also does so. At threshold one neither test decides. On each interval \\([n,n+1]\\), monotonicity gives \\(h(n+1)\\le\\int_n^{n+1}h\\le h(n)\\); summing proves the integral comparison and its error estimate.",
+      "method": "Use a bound independent of auxiliary parameters when the exam asks for a uniform limit.",
+      "pitfall": "The ratio test requires meaningful ratios; direct geometric estimates can avoid zero denominators.",
+      "definitions": [
+        {
+          "question": "What is absolute convergence?",
+          "answer": "\\(\\sum |a_n|<\\infty\\). It implies convergence by the Cauchy criterion."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "alternating-dirichlet",
+      "module": "sequences",
+      "title": "Alternating series and Dirichlet summation",
+      "kind": "theorem",
+      "statement": "If partial sums of \\(a_n\\) are bounded and \\(b_n\\downarrow0\\), then \\(\\sum a_nb_n\\) converges. The alternating test is the case \\(a_n=(-1)^n\\).",
+      "proof": "Write \\(A_j=\\sum_{k=m}^j a_k\\), bounded by twice the original partial-sum bound \\(C\\). Summation by parts gives \\(\\sum_{k=m}^n a_kb_k=A_nb_n+\\sum_{k=m}^{n-1}A_k(b_k-b_{k+1})\\). Its modulus is at most \\(2C[b_n+\\sum(b_k-b_{k+1})]=2Cb_m\\), which tends to zero as \\(m\\to\\infty\\). The Cauchy criterion proves convergence. For alternating decreasing positive terms, even and odd partial sums bracket the limit and the remainder has magnitude at most the next term. If the partial-sum bound and decay of \\(b_m\\) are uniform over a parameter set, the same proof gives uniform convergence.",
+      "method": "For trigonometric series, compute a finite geometric sum to bound oscillatory partial sums away from resonance.",
+      "pitfall": "Alternating signs alone are insufficient; the decay and monotonicity conditions matter.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "mvt",
+      "module": "differentiation",
+      "title": "Rolle and mean value theorems",
+      "kind": "theorem",
+      "statement": "For continuous \\(f\\) on \\([a,b]\\), differentiable on \\((a,b)\\), some \\(c\\) satisfies \\(f(b)-f(a)=f\\prime(c)(b-a)\\). In particular, a derivative bound gives a Lipschitz bound.",
+      "proof": "An interior local extremum has derivative zero: the one-sided difference quotients have opposing inequalities and their common limit is zero. Rolle follows by compact extremum attainment when equal endpoint values do not make the function constant. Subtract the secant affine function from \\(f\\); the remainder has equal endpoint values, and Rolle gives the mean value identity. Applying the theorem to two arbitrary points yields \\(|f(x)-f(y)|\\le M|x-y|\\) when \\(|f\\prime|\\le M\\). For vector maps, apply the scalar theorem to the projection of the value difference onto its own unit direction, or integrate the derivative along the segment.",
+      "method": "Endpoint continuity is enough; differentiability at the segment endpoints is unnecessary.",
+      "pitfall": "A vector-valued difference need not equal a derivative at a single intermediate point.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "taylor",
+      "module": "differentiation",
+      "title": "Taylor’s theorem and quantitative remainders",
+      "kind": "theorem",
+      "statement": "If \\(f\\in C^{m+1}\\) near \\([a,x]\\), then \\(f(x)=\\sum_{j=0}^m f^{(j)}(a)(x-a)^j/j!+R_m\\), with \\(|R_m|\\le \\sup|f^{(m+1)}|\\,|x-a|^{m+1}/(m+1)!\\). A \\(C^m\\) function has an \\(o(|x-a|^m)\\) Peano remainder.",
+      "proof": "For the integral remainder, subtract the Taylor polynomial, integrate its next derivative, and repeat the fundamental theorem of calculus: \\(R_m=\\frac1{m!}\\int_a^x(x-t)^m f^{(m+1)}(t)\\,dt\\), with oriented integration for \\(x<a\\). Bounding the integral gives the stated estimate. The weighted mean value theorem for a continuous derivative gives the Lagrange form. For Peano remainder, apply the integral form at order \\(m-1\\) and subtract \\(f^{(m)}(a)\\) within the final integral; continuity makes that difference uniformly small on the shrinking interval. In several variables apply this to \\(h(t)=f(a+tv)\\); its derivatives are the corresponding multilinear derivatives applied repeatedly to \\(v\\).",
+      "method": "Cancel exact low-order terms first, then bound the remainder on one compact neighborhood.",
+      "pitfall": "A smooth function need not equal its infinite Taylor series; a remainder estimate must prove that.",
+      "definitions": [],
+      "visual": "taylor"
+    },
+    {
+      "id": "uniform-convergence",
+      "module": "function-series",
+      "title": "Uniform convergence, continuity and integration",
+      "kind": "theorem",
+      "statement": "Uniform convergence means \\(\\sup_X|f_n-f|\\to0\\). Uniform limits of continuous functions are continuous; on a finite interval, uniform limits of Riemann-integrable functions are integrable and their integrals converge.",
+      "proof": "Continuity follows from \\(|f(x)-f(y)|\\le|f-f_N|(x)+|f_N(x)-f_N(y)|+|f_N-f|(y)\\), choosing \\(N\\) to make both outer terms small and then using continuity of \\(f_N\\). For integration, \\(|\\int(f-f_N)|\\le(b-a)\\|f-f_N\\|_\\infty\\). Integrability follows from Darboux upper/lower sums: the gap for \\(f\\) differs from that for \\(f_N\\) by at most \\(2(b-a)\\|f-f_N\\|_\\infty\\). For the uniform Cauchy criterion, uniform tail closeness gives pointwise Cauchy sequences in the complete target, and passing the pointwise limit in a common tail bound gives uniform convergence.",
+      "method": "Write the quantifiers explicitly: one index works for every point in the domain.",
+      "pitfall": "Pointwise convergence can lose continuity and does not justify exchanging integrals and limits.",
+      "definitions": [
+        {
+          "question": "What is equicontinuity at a point?",
+          "answer": "For each \\(\\varepsilon>0\\) there is one neighborhood of the point on which every function differs from its value at that point by less than \\(\\varepsilon\\)."
+        },
+        {
+          "question": "What is pointwise convergence?",
+          "answer": "For each fixed \\(x\\), \\(f_n(x)\\) tends to \\(f(x)\\); the convergence index can depend on \\(x\\)."
+        },
+        {
+          "question": "What is the uniform norm?",
+          "answer": "\\(\\|f\\|_\\infty=\\sup_{x\\in X}|f(x)|\\) for a bounded function."
+        }
+      ],
+      "visual": "uniform"
+    },
+    {
+      "id": "m-test",
+      "module": "function-series",
+      "title": "Weierstrass \\(M\\)-test",
+      "kind": "theorem",
+      "statement": "If \\(|u_n(x)|\\le M_n\\) on \\(X\\), and \\(\\sum M_n<\\infty\\), then \\(\\sum u_n\\) converges absolutely pointwise and uniformly.",
+      "proof": "For every tail, \\(\\sup_x|\\sum_{n=p}^q u_n(x)|\\le\\sum_{n=p}^qM_n\\). The right side tends to zero uniformly in \\(q\\ge p\\), by numerical-series convergence. Thus the partial sums are uniformly Cauchy and converge uniformly. Applying the same majorant to \\(\\sum|u_n(x)|\\) proves pointwise absolute convergence, indeed uniform convergence of that absolute-value series too. A majorant on each compact subset gives local uniform convergence, sufficient for continuity of a sum of continuous functions.",
+      "method": "Scale a spatial radius against the index to obtain a summable bound independent of that radius.",
+      "pitfall": "A bound \\(M_n(x)\\) depending on the point does not establish uniform convergence on the whole domain.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "derivative-series",
+      "module": "function-series",
+      "title": "Uniform derivative convergence",
+      "kind": "theorem",
+      "statement": "If \\(f_n\\in C^1([a,b])\\), \\(f_n(a)\\) converges, and \\(f_n\\prime\\to g\\) uniformly, then \\(f_n\\) converges uniformly to \\(f\\in C^1\\) with \\(f\\prime=g\\). The same argument applies to series of derivatives.",
+      "proof": "The identities \\(f_n(x)=f_n(a)+\\int_a^x f_n\\prime(t)\\,dt\\) converge uniformly because the integral differences are bounded by \\((b-a)\\|f_n\\prime-g\\|_\\infty\\). The limit is \\(f(x)=\\lim f_n(a)+\\int_a^xg(t)\\,dt\\). Uniform limits preserve continuity of the derivatives, so \\(g\\) is continuous; the fundamental theorem gives \\(f\\prime=g\\). For higher derivatives apply the argument successively. The basepoint condition fixes the otherwise uncontrolled additive constants.",
+      "method": "Find a basepoint where the original series converges before using a uniformly convergent derivative series.",
+      "pitfall": "Uniform convergence of functions alone says nothing about convergence of derivatives.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "power-series",
+      "module": "function-series",
+      "title": "Power series: radius, differentiation and identity",
+      "kind": "theorem",
+      "statement": "A power series has radius \\(R\\) given by \\(R^{-1}=\\limsup |a_n|^{1/n}\\). It converges absolutely and uniformly on compact subsets of \\(|x|<R\\), can be differentiated there, and has uniquely determined coefficients.",
+      "proof": "For \\(r<R\\) choose \\(s\\) with \\(r<s<R\\). Convergence at \\(s\\) bounds \\(|a_n|s^n\\); thus \\(|a_n|r^n\\le C(r/s)^n\\), giving uniform convergence. The derivative terms are bounded by \\(C n r^{n-1}/s^n\\), another summable geometric-polynomial majorant. Uniform derivative convergence therefore justifies differentiation, repeatedly. The root test yields the radius and divergence outside it. Coefficients are \\(f^{(n)}(0)/n!\\). Alternatively, if two series agree at nonzero points accumulating at zero, factor the first nonzero difference coefficient: \\(x^m(c_m+O(x))\\) is nonzero near zero, a contradiction. Endpoint convergence must be examined separately.",
+      "method": "Study endpoints using numerical series tests after substituting them explicitly.",
+      "pitfall": "Uniform convergence on every compact subinterval does not imply uniform convergence up to the radius boundary.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "dini",
+      "module": "function-series",
+      "title": "Dini’s theorem",
+      "kind": "theorem",
+      "statement": "A monotone sequence of real continuous functions on a compact space converging pointwise to a continuous limit converges uniformly.",
+      "proof": "For a decreasing sequence subtract the limit, obtaining \\(h_n\\ge0\\) decreasing to zero. For fixed \\(\\varepsilon>0\\), the sets \\(U_n=\\{h_n<\\varepsilon\\}\\) are open, increasing, and cover the compact space. A finite subcover is contained in its largest-index member; hence that member is the whole space. Every later \\(h_n\\) is below \\(\\varepsilon\\) everywhere. An increasing sequence reduces to this case by negation.",
+      "method": "Monotonicity must be in the sequence index. Verify continuity of the limit separately.",
+      "pitfall": "\\(x^n\\to0\\) on \\((0,1)\\) is monotone but not uniform; compactness cannot be omitted.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "ascoli",
+      "module": "function-series",
+      "title": "Arzelà–Ascoli and diagonal extraction",
+      "kind": "theorem",
+      "statement": "A uniformly bounded equicontinuous family of real continuous functions on compact metric \\(K\\) has compact closure in the supremum norm. A closed such family is compact.",
+      "proof": "Total boundedness of \\(K\\) yields a countable dense subset by union of finite \\(1/m\\) nets. Given a sequence of functions, successively extract subsequences convergent at its first, second and later dense points, using boundedness; the diagonal subsequence converges at every dense point. For fixed \\(\\varepsilon\\), equicontinuity and a finite cover provide finitely many dense centers whose common oscillations are below \\(\\varepsilon/3\\). Convergence at these centers makes the diagonal sequence uniformly Cauchy by the three-term triangle inequality. Completeness of \\(C(K)\\) gives a continuous uniform limit. This proves sequential compactness of the closure, hence compactness. Conversely, a finite supremum-norm net in a compact family gives uniform boundedness and equicontinuity from finitely many continuous centers. For local uniform convergence on an unbounded domain, repeat on a countable compact exhaustion and take another diagonal subsequence. The uniform closure remains uniformly bounded and equicontinuous, by taking limits in each common oscillation bound, so the same subsequence argument applies directly to sequences in the closure.",
+      "method": "After extraction, prove the limit retains endpoint, range and differential constraints.",
+      "pitfall": "Relative compactness does not prove membership in the original family; closedness remains necessary.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "weierstrass",
+      "module": "approximation",
+      "title": "Weierstrass approximation theorem",
+      "kind": "theorem",
+      "statement": "Every continuous real function on a compact interval is a uniform limit of polynomials.",
+      "proof": "Rescale to \\([0,1]\\). Define the Bernstein polynomial \\(B_nf(x)=\\sum_{k=0}^nf(k/n)\\binom nkx^k(1-x)^{n-k}\\). Its nonnegative weights sum to one. Their weighted mean of \\(k/n\\) is \\(x\\), and their mean squared deviation is \\(x(1-x)/n\\le1/(4n)\\), obtained by differentiating \\((s+t)^n\\) once and twice. Given \\(\\varepsilon\\), choose \\(\\delta\\) making \\(|f(u)-f(x)|<\\varepsilon\\) when \\(|u-x|<\\delta\\). The near terms contribute at most \\(\\varepsilon\\). For the other terms, their total weight is at most \\(1/(4n\\delta^2)\\), because each deviation squared is at least \\(\\delta^2\\). Their contribution is at most \\(2\\|f\\|_\\infty/(4n\\delta^2)\\). This bound is independent of \\(x\\) and tends to zero. Rescaling gives polynomial approximation on any nondegenerate compact interval; a singleton is immediate.",
+      "method": "Approximate to less than a uniform positive gap; use polynomials as test functions and then density.",
+      "pitfall": "Continuous functions on noncompact domains need not have uniform polynomial approximations.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "stone-weierstrass",
+      "module": "approximation",
+      "title": "Real Stone–Weierstrass theorem",
+      "kind": "theorem",
+      "statement": "A subalgebra of \\(C(K,\\mathbb R)\\) on compact Hausdorff \\(K\\), containing constants and separating points, is uniformly dense.",
+      "proof": "Let \\(B\\) be its uniform closure. It is an algebra. Polynomial approximation to absolute value on a bounded real interval, with the constant adjusted at zero if needed, gives \\(|g|\\in B\\) for \\(g\\in B\\); hence \\(B\\) is closed under minima and maxima. Fix continuous \\(f\\) and \\(\\varepsilon>0\\). For each \\(x,y\\), separation and an affine adjustment give \\(h_{xy}\\) in the original algebra with \\(h_{xy}(x)=f(x)\\), \\(h_{xy}(y)=f(y)\\); for \\(x=y\\) use a constant. For fixed \\(x\\), the neighborhoods where \\(h_{xy}>f-\\varepsilon\\) cover \\(K\\). Choose finitely many and let \\(g_x\\) be their maximum. Then \\(g_x>f-\\varepsilon\\) everywhere and \\(g_x(x)=f(x)\\). The neighborhoods where \\(g_x<f+\\varepsilon\\) cover \\(K\\) as \\(x\\) varies. Choose finitely many and let \\(g\\) be their minimum. Now \\(f-\\varepsilon<g<f+\\varepsilon\\) and \\(g\\in B\\). As \\(B\\) is closed this proves \\(f\\in B\\). For the complex version add closure under conjugation, reducing real and imaginary parts to the real theorem.",
+      "method": "The two finite-cover steps run in different directions: first maxima, then minima.",
+      "pitfall": "Separation alone is insufficient without the algebra and constant hypotheses.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "riemann",
+      "module": "integration",
+      "title": "Riemann integrability and Darboux sums",
+      "kind": "theorem",
+      "statement": "A bounded real function on \\([a,b]\\) is Riemann integrable exactly when for every \\(\\varepsilon>0\\) a partition has \\(U(f,P)-L(f,P)<\\varepsilon\\).",
+      "proof": "Upper sums decrease and lower sums increase under refinement. Every lower sum is at most every upper sum, by a common refinement. Thus the supremum of lower sums and infimum of upper sums exist. They coincide exactly when an arbitrarily small Darboux gap exists. Riemann sums of any refinement lie between the lower and upper sums. Conversely, choose sample values arbitrarily close to each cell supremum or infimum: if all sufficiently fine tagged sums converge to one value, their differences force small Darboux gaps. For a continuous function, uniform continuity makes each fine-cell oscillation below \\(\\varepsilon/(b-a)\\), proving integrability. Integrable functions admit lower step approximations with arbitrarily small integral absolute error. To handle fine partitions that do not refine a chosen good partition, insert its finitely many cut points. Only cells crossing those points change; their total length is at most the number of cut points times the mesh, and the resulting sum error is bounded by twice the function bound times that length. Thus all tagged sums with sufficiently small mesh converge to the common Darboux value.",
+      "method": "Use integral absolute-error approximation for discontinuous integrable functions.",
+      "pitfall": "A bounded function need not be Riemann integrable.",
+      "definitions": [
+        {
+          "question": "What is a Darboux gap?",
+          "answer": "\\(\\sum_{I\\in P}(\\sup_I f-\\inf_I f)|I|\\)."
+        },
+        {
+          "question": "What is a Riemann sum?",
+          "answer": "\\(\\sum_i f(\\xi_i)(x_i-x_{i-1})\\), where each tag lies in its partition interval. Integrability means all tagged sums converge to the same limit as the mesh tends to zero."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "null-sets",
+      "module": "integration",
+      "title": "Measure zero and the Riemann–Lebesgue criterion",
+      "kind": "theorem",
+      "statement": "A bounded function on a compact box is Riemann integrable iff its set of discontinuities has measure zero. A set has measure zero if for every positive tolerance it admits a countable box cover of total volume below that tolerance.",
+      "proof": "Define oscillation \\(\\omega_f(x)\\) as the infimum of value oscillations on neighborhoods of \\(x\\) within the box. The sets \\(E_k=\\{\\omega_f\\ge1/k\\}\\) are closed and their union is the discontinuity set. If a Darboux gap is small, cells meeting \\(E_k\\), apart from partition boundaries, have oscillation at least \\(1/k\\); their total volume is at most \\(k\\) times that gap. Boundaries are null, so \\(E_k\\) is null. Countable unions of null sets are null by assigning cover tolerances \\(\\varepsilon2^{-k}\\). Conversely, if discontinuities are null, cover compact \\(E_k\\) by finitely many open boxes of tiny total volume. On its compact complement each point has a neighborhood with oscillation below \\(2/k\\); a finite cover and a sufficiently fine grid bound oscillations on cells away from the exceptional cover. The exceptional cells have small total volume by slightly enlarging the finite cover; their contribution is at most twice the global bound times that volume. The other cells contribute at most \\(2\\operatorname{vol}(Q)/k\\). Let \\(k\\) grow and the cover shrink to obtain arbitrarily small Darboux gaps.",
+      "method": "Use a finite cover of a compact null set, and a strict maximum bound on its complement.",
+      "pitfall": "A dense null set can still affect pointwise values; a function discontinuous everywhere is not Riemann integrable.",
+      "definitions": [
+        {
+          "question": "What is a measure-zero set?",
+          "answer": "For each \\(\\varepsilon >0\\) it has a countable cover by boxes whose total volumes are below \\(\\varepsilon\\)."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "ftc",
+      "module": "integration",
+      "title": "Fundamental theorem of calculus",
+      "kind": "theorem",
+      "statement": "For continuous \\(f\\), \\(F(x)=\\int_a^xf(t)\\,dt\\) satisfies \\(F\\prime=f\\). If \\(G\\in C^1([a,b])\\), then \\(\\int_a^bG\\prime=G(b)-G(a)\\).",
+      "proof": "The quotient \\([F(x+h)-F(x)]/h\\) is the average of \\(f\\) over the small interval; subtract \\(f(x)\\) and bound by its supremum oscillation, which tends to zero. Thus \\(F\\prime=f\\). For the second claim, the function \\(G-F\\) has zero derivative and is constant by the mean value theorem. Evaluate it at both endpoints. Integration by parts follows by integrating the product derivative, and the substitution rule follows by the chain rule applied to an antiderivative. One-sided endpoint derivatives use the same averaging argument.",
+      "method": "Integral equations provide a safe way to pass derivative constraints through uniform limits.",
+      "pitfall": "An antiderivative argument needs the stated regularity; not every discontinuous integrable function gives a derivative at every point.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "fubini",
+      "module": "integration",
+      "title": "Iterated Riemann integrals",
+      "kind": "theorem",
+      "statement": "If \\(f\\) is Riemann integrable on a rectangle and each inner slice is integrable, its iterated integrals exist and equal its double integral. Continuous functions always satisfy these hypotheses.",
+      "proof": "For product partitions, the inner slice integral is bounded between sums of slice infima and suprema. On each outer interval those bounds are in turn controlled by the infimum and supremum of \\(f\\) on the corresponding rectangles. Therefore lower and upper sums of the outer slice-integral function lie between the double lower and upper sums. Since the double Darboux gaps can be made arbitrarily small, the outer function is integrable and has the same integral. Interchanging the roles proves the other order. Continuity gives both full and slice integrability. For mixed partials, compute their separate iterated integrals by FTC; both equal the same four-corner increment. The continuous difference has zero integrals over small rectangles, so its value at each center is zero by the average estimate.",
+      "method": "Check inner slice integrability rather than assuming it from full integrability.",
+      "pitfall": "Two iterated integrals can exist without a double Riemann integral existing.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "frechet",
+      "module": "multivariable",
+      "title": "Fréchet differentiability and the chain rule",
+      "kind": "theorem",
+      "statement": "\\(f\\) is differentiable at \\(a\\) if \\(f(a+h)=f(a)+Lh+o(|h|)\\) for a linear map \\(L\\). Continuous partial derivatives near \\(a\\) imply differentiability there. Differentiable compositions have derivative \\(D(g\\circ f)(a)=Dg(f(a))Df(a)\\).",
+      "proof": "For continuous partials, split a coordinate increment into successive single-coordinate changes. Each change is its corresponding partial at a nearby point times that coordinate increment by the one-variable MVT. Subtract the partials at \\(a\\); continuity bounds every error by \\(\\varepsilon\\sum_i|h_i|\\le\\varepsilon\\sqrt n|h|\\). For the chain rule, put \\(k=f(a+h)-f(a)=Lh+o(|h|)\\), so \\(|k|=O(|h|)\\). The outer expansion is \\(g(f(a)+k)=g(f(a))+Mk+o(|k|)\\). Substitute to obtain \\(MLh+o(|h|)\\). The derivative is unique, by evaluating the difference of candidate linear maps along every fixed ray.",
+      "method": "Prove a remainder small relative to the full norm, not just along coordinate axes.",
+      "pitfall": "Existence of all partial derivatives at one point does not imply differentiability.",
+      "definitions": [
+        {
+          "question": "What is the Fréchet derivative?",
+          "answer": "A linear map \\(A\\) with \\(f(a+h)=f(a)+Ah+o(\\|h\\|)\\)."
+        },
+        {
+          "question": "What is a Jacobian matrix?",
+          "answer": "The matrix of the derivative in standard coordinates: its \\((i,j)\\) entry is the \\(j\\)th partial derivative of the \\(i\\)th component."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "inverse-function",
+      "module": "multivariable",
+      "title": "Inverse function theorem",
+      "kind": "theorem",
+      "statement": "If \\(f\\in C^1\\) near \\(a\\in\\mathbb R^n\\) and \\(Df(a)\\) is invertible, \\(f\\) is a local \\(C^1\\) diffeomorphism. Its inverse derivative is \\(D(f^{-1})(y)=[Df(f^{-1}(y))]^{-1}\\).",
+      "proof": "By affine changes take \\(a=f(a)=0\\), \\(Df(0)=I\\). Choose a closed ball of radius \\(r\\) on which \\(\\|Df-I\\|\\le q<1\\). For \\(|y|<(1-q)r\\), \\(T_y(x)=x-f(x)+y\\) is a contraction and maps the ball into itself, since \\(|T_y(x)|\\le q|x|+|y|\\). It has a unique fixed point \\(x(y)\\), solving \\(f(x)=y\\). The segment derivative bound gives \\(|f(x)-f(z)|\\ge(1-q)|x-z|\\), hence injectivity and a Lipschitz inverse. At any solution, write \\(y+k=f(x+h)=f(x)+Df(x)h+o(|h|)\\). The inverse Lipschitz bound makes \\(|h|=O(|k|)\\), so \\(h=Df(x)^{-1}k+o(|k|)\\). This proves inverse differentiability; continuity of \\(Df\\) and matrix inversion proves it is \\(C^1\\). Restrict to the preimage of the open target ball. Undoing the affine changes gives the formula and higher regularity follows by differentiating it.",
+      "method": "Choose the derivative with respect to the unknown variable, and verify it is invertible on the full relevant vector space.",
+      "pitfall": "A singular derivative alone does not prove failure of a continuous local inverse.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "implicit-function",
+      "module": "multivariable",
+      "title": "Implicit function and regular level set theorems",
+      "kind": "theorem",
+      "statement": "For \\(F:\\mathbb R^p\\times\\mathbb R^q\\to\\mathbb R^q\\) of class \\(C^1\\), if \\(F(a,b)=0\\) and \\(D_yF(a,b)\\) is invertible, the nearby zeros are uniquely \\(y=g(x)\\), with \\(Dg=-(D_yF)^{-1}D_xF\\). A rank-\\(q\\) level set has local dimension \\(p\\).",
+      "proof": "Define \\(H(x,y)=(x,F(x,y))\\). Its derivative is block triangular with identity and \\(D_yF\\) on its diagonal, so the inverse theorem applies. The first component of its inverse must remain \\(x\\); restricting the second target component to zero yields \\(g(x)\\). The inverse neighborhood supplies uniqueness of nearby solutions. Differentiating \\(F(x,g(x))=0\\) gives the displayed derivative. For a general full-rank derivative, select an invertible \\(q\\)-column minor and permute coordinates to make those the unknown \\(y\\) variables. The same construction parametrizes the level set by the other \\(p\\) coordinates; overlapping parametrizations give the embedded submanifold structure.",
+      "method": "Compute an explicit nonzero minor or prove independence of constraint gradients.",
+      "pitfall": "The theorem gives local branches; it does not assert global uniqueness of all solutions.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "lagrange",
+      "module": "multivariable",
+      "title": "Lagrange multipliers and constrained extrema",
+      "kind": "theorem",
+      "statement": "Let \\(f\\) be differentiable and let \\(G\\) be \\(C^1\\) near a constrained extremum with \\(G=0\\). If the constraint gradients are independent there, \\(Df\\) is a linear combination of the rows of \\(DG\\).",
+      "proof": "The implicit-function theorem parametrizes the regular level set. Differentiating \\(f\\) along all coordinate curves in that parametrization makes \\(Df\\) vanish on its tangent space, which is \\(\\ker DG\\). In finite dimensions a functional vanishing on \\(\\ker DG\\) lies in the row span: choose a complementary space on which the onto map \\(DG\\) is an isomorphism, factor the functional through it, and express the resulting functional on the target in coordinates. This gives the multipliers. On a compact constraint set extrema exist, but boundary or rank-deficient points must be handled separately. A candidate system is necessary, not sufficient; compare all candidates or use structural bounds.",
+      "method": "First prove existence of an extremum, then verify the rank condition at every relevant point.",
+      "pitfall": "Do not use the inequality being proved to justify the constrained maximum; that is circular.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "change-variables",
+      "module": "vector",
+      "title": "Change of variables and absolute Jacobians",
+      "kind": "theorem",
+      "statement": "For a \\(C^1\\) diffeomorphism \\(\\Phi\\) between open Euclidean sets and an integrable function with compact support, \\(\\int f(y)\\,dy=\\int f(\\Phi(x))|\\det D\\Phi(x)|\\,dx\\). The Riemann version requires appropriate Jordan domains and integrability.",
+      "proof": "A linear invertible map scales parallelepiped volume by its absolute determinant: elementary shears preserve volume, diagonal scalings multiply it by the product of absolute factors, and elimination decomposes an invertible map into these and coordinate interchanges. For a \\(C^1\\) map on a compact set, differentiability is uniform on sufficiently small cubes, so on a cube of side \\(h\\) its increment differs from its linear derivative image by \\(o(h)\\), uniformly. The derivative and its inverse are uniformly bounded; this confines the image between small neighborhoods of the derivative parallelepiped, whose volume error is \\(o(h^n)\\). Their boundary neighborhoods have volume \\(O(\\varepsilon h^n)\\) by the finitely many faces. Thus image-cube volume is \\(|\\det D\\Phi(x_Q)|h^n+o(h^n)\\). Images of cube interiors are disjoint by injectivity, and common faces have null images because \\(\\Phi\\) is Lipschitz on the compact set: a Lipschitz map sends null sets to null sets by box covering. For continuous compactly supported \\(f\\), uniform continuity bounds the oscillation on each image cube; summing gives the desired Riemann-sum limits. For bounded Riemann-integrable \\(f\\), its discontinuity set is null; the locally Lipschitz inverse preserves that nullity under preimage, so the transformed function is integrable and upper/lower step estimates extend the identity. Exhaustions give the improper or nonnegative version when required. To justify the lower image-volume inclusion used above, write the map on a small closed cube as \\(\\Phi(x)=\\Phi(x_0)+L(x-x_0)+r(x)\\), with \\(L=D\\Phi(x_0)\\). Uniform derivative continuity bounds both the size of \\(L^{-1}r\\) by \\(C\\varepsilon h\\) and its Lipschitz constant by \\(C\\varepsilon\\). For \\(y\\) in the linear parallelepiped at distance greater than \\(C\\varepsilon h\\) from its faces, let \\(z=x_0+L^{-1}(y-\\Phi(x_0))\\). The map \\(x\\mapsto z-L^{-1}r(x)\\) maps the cube into itself and is a strict contraction when \\(\\varepsilon\\) is small. Its fixed point satisfies \\(\\Phi(x)=y\\). Thus the image contains the parallelepiped with thin face strips removed, as well as lying in its thin outer neighborhood. This supplies both volume bounds without assuming surjectivity of a linear approximation.",
+      "method": "Use the absolute determinant even if the map reverses orientation; first identify its actual image.",
+      "pitfall": "A bounded integrable function can pull back to a nonintegrable one through a singular non-diffeomorphic map.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "green",
+      "module": "vector",
+      "title": "Green’s theorem",
+      "kind": "theorem",
+      "statement": "For a bounded piecewise smooth planar domain \\(\\Omega\\) and \\(C^1\\) field \\((P,Q)\\) near its closure, positively oriented boundary circulation equals \\(\\int_\\Omega(Q_x-P_y)\\,dA\\).",
+      "proof": "For a vertically simple domain \\(a<x<b\\), \\(g_1(x)<y<g_2(x)\\), FTC gives \\(-\\int_\\Omega P_y=\\int_a^b[P(x,g_1)-P(x,g_2)]\\,dx\\). This is exactly the bottom and reversed-top \\(P\\,dx\\) boundary integral; vertical boundary pieces contribute zero. Horizontally simple domains similarly give \\(\\int_\\Omega Q_x=\\oint Q\\,dy\\). A domain decomposed into finitely many such pieces follows by addition; internal boundaries cancel with opposite orientations. For general piecewise smooth boundaries, cover the compact closure by interior rectangles and boundary coordinate patches, and choose a smooth subordinate partition of unity. In each boundary patch the boundary is a graph after a rigid rotation, so the simple-domain calculation applies to the supported field; interior patches have zero boundary integral by the rectangle calculation. Sum the local identities. The derivatives of the partition cancel because the partition sums to one near the closure. Holes receive clockwise orientation, precisely the orientation needed for internal cancellation.",
+      "method": "Apply to the full closed curve before estimating truncated endpoints. Excise singularities first.",
+      "pitfall": "A curl-free field on a punctured domain need not have zero circulation around a hole.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "divergence",
+      "module": "vector",
+      "title": "Divergence theorem",
+      "kind": "theorem",
+      "statement": "For a bounded domain with piecewise smooth boundary and \\(C^1\\) vector field \\(F\\) near its closure, \\(\\int_\\Omega\\operatorname{div}F=\\int_{\\partial\\Omega}F\\cdot\\nu\\).",
+      "proof": "On a coordinate-simple region \\(g_1(x\\prime)<x_n<g_2(x\\prime)\\), integrating \\(\\partial_nF_n\\) by FTC gives \\(\\int[F_n(x\\prime,g_2)-F_n(x\\prime,g_1)]\\,dx\\prime\\). On the top/bottom graphs the product \\(\\nu_n\\,dS\\) is respectively \\(+dx\\prime\\) and \\(-dx\\prime\\), so this is exactly the flux of the \\(n\\)th component. Summing the analogous component formulas proves the result for regions simple in the needed directions, in particular boxes. For a general smooth boundary, compactness supplies finitely many rotated graph patches plus interior patches. A smooth partition of unity subordinate to them splits the field. The supported field in each boundary patch has a graph top or bottom and vanishes near all artificial edges, where the preceding FTC computation applies; the interior supported terms integrate to zero by box FTC. Sum: divergence of the split fields equals divergence of \\(F\\), since the partition gradients sum to zero. Their true-boundary fluxes sum to the original flux. Piecewise smooth faces are treated separately, and their intersections have zero surface measure. An inner boundary of an excised ball has the opposite radial normal.",
+      "method": "For radial fields calculate divergence away from singularities and track inner and outer flux signs.",
+      "pitfall": "The theorem cannot be applied across a singularity merely because divergence vanishes elsewhere.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "stokes",
+      "module": "vector",
+      "title": "Stokes’ theorem and potentials",
+      "kind": "theorem",
+      "statement": "For an oriented smooth surface with compatible boundary orientation and \\(C^1\\) vector field, \\(\\int_S\\operatorname{curl}F\\cdot\\nu\\,dS=\\oint_{\\partial S}F\\cdot dr\\). A \\(C^1\\) potential always gives zero closed-curve integral.",
+      "proof": "On a smooth surface parametrization \\(r(u,v)\\), set \\(P=F(r)\\cdot r_u\\), \\(Q=F(r)\\cdot r_v\\). Differentiating and canceling mixed derivatives gives \\(Q_u-P_v=\\operatorname{curl}F(r)\\cdot(r_u\\times r_v)\\). Green on the parameter region equates its integral to \\(\\oint(P\\,du+Q\\,dv)\\), which is the curve integral of \\(F\\). For a general oriented surface, split into coordinate patches with a partition of unity and apply this pullback identity to each supported one-form. The exterior derivatives of the partition cancel on summation, and internal oriented edges cancel; only the true boundary remains. If \\(F=\\nabla\\phi\\), the chain rule gives \\(F(r(t))\\cdot r\\prime(t)=(\\phi\\circ r)\\prime(t)\\), so FTC makes a closed integral zero, with only \\(\\phi\\in C^1\\) required.",
+      "method": "For a radial continuous field, build a radial potential directly rather than differentiating a nonexistent curl.",
+      "pitfall": "The choice of surface normal determines the positive boundary direction.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "poincare",
+      "module": "vector",
+      "title": "Closed forms on a star-shaped domain",
+      "kind": "theorem",
+      "statement": "A smooth closed differential \\(k\\)-form on a star-shaped open subset of \\(\\mathbb R^n\\), \\(k\\ge1\\), is exact. For a curl-free \\(C^1\\) vector field this gives a potential.",
+      "proof": "Translate the star center to zero and use \\(H(t,x)=tx\\). Pull back the form to the product and write \\(H^*\\omega=dt\\wedge\\alpha_t+\\beta_t\\), where \\(\\beta_t=H_t^*\\omega\\). Closedness gives \\(\\partial_t\\beta_t=d_x\\alpha_t\\): compare the coefficients of \\(dt\\) in \\(d(H^*\\omega)=0\\). Set \\(\\eta=\\int_0^1\\alpha_t\\,dt\\). Differentiation under this smooth finite-interval integral gives \\(d\\eta=\\beta_1-\\beta_0=\\omega\\), since pullback by a constant map annihilates positive-degree forms. In coordinates, \\(\\eta_x(v_1,\\ldots,v_{k-1})=\\int_0^1t^{k-1}\\omega_{tx}(x,v_1,\\ldots,v_{k-1})\\,dt\\). For one-forms this is the radial scalar potential. Lower regularity pullbacks require weak derivatives or justified smooth approximation; positive degree is essential.",
+      "method": "Use the radial homotopy only when every segment from the center stays inside the domain.",
+      "pitfall": "Closed need not mean exact on a domain with a hole.",
+      "definitions": [
+        {
+          "question": "What does closed mean for a form?",
+          "answer": "\\(d\\omega=0\\). Exact means \\(\\omega=d\\eta\\), and exact implies closed because \\(d^2=0\\)."
+        },
+        {
+          "question": "What are closed and exact forms?",
+          "answer": "Closed means \\(d\\omega=0\\); exact means \\(\\omega=d\\eta\\). Exact implies closed, but the converse can fail on punctured domains."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "bases",
+      "module": "spaces",
+      "title": "Bases, dimension and change of coordinates",
+      "kind": "theorem",
+      "statement": "A finite-dimensional vector space has a basis; every independent set extends to a basis and every spanning set contains one. All bases have the same number of vectors.",
+      "proof": "If an independent set does not span, add a vector outside its span; independence is preserved. Finite dimension forces this process to stop. For a finite spanning set remove a dependent vector without changing the span, repeatedly. To compare an independent list with a spanning list, express the first independent vector using the spanning vectors and replace one with nonzero coefficient; the new list still spans. Repeat with each independent vector, always replacing an unused spanning vector, or independence would fail. Thus the independent list has at most as many vectors as the spanning list. Applying this in both directions proves equal basis lengths. Coordinates are unique by independence. If columns of \\(P\\) are new-basis vectors in old coordinates, matrices transform as \\([T]_{new}=P^{-1}[T]_{old}P\\).",
+      "method": "Always state which basis supplies input and output coordinates; images are matrix columns.",
+      "pitfall": "A coordinate change and an operator matrix are different maps.",
+      "definitions": [
+        {
+          "question": "What is linear independence?",
+          "answer": "\\(\\sum_i c_iv_i=0\\) implies every coefficient is zero."
+        },
+        {
+          "question": "What is a direct sum?",
+          "answer": "\\(V=U\\oplus W\\) means each vector has a unique decomposition \\(u+w\\); equivalently \\(U+W=V\\) and \\(U\\cap W=0\\)."
+        },
+        {
+          "question": "What is a subspace?",
+          "answer": "A subset containing zero and closed under addition and scalar multiplication."
+        },
+        {
+          "question": "What is linear independence?",
+          "answer": "A finite linear combination equaling zero forces all coefficients to be zero."
+        },
+        {
+          "question": "What is a basis?",
+          "answer": "A linearly independent spanning family. Every vector has a unique finite coordinate expansion."
+        },
+        {
+          "question": "What is an isomorphism?",
+          "answer": "A bijective linear map; its inverse is linear."
+        },
+        {
+          "question": "How does a change of basis affect an operator matrix?",
+          "answer": "If \\(P\\) converts new coordinates to old, the new matrix is \\(P^{-1}AP\\)."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "rank-nullity",
+      "module": "spaces",
+      "title": "Rank–nullity and composition bounds",
+      "kind": "theorem",
+      "statement": "For \\(T:V\\to W\\) with finite-dimensional \\(V\\), \\(\\dim V=\\dim\\ker T+\\dim\\operatorname{ran}T\\). For endomorphisms, \\(\\operatorname{rank}S+\\operatorname{rank}T-n\\le\\operatorname{rank}(ST)\\le\\min(\\operatorname{rank}S,\\operatorname{rank}T)\\).",
+      "proof": "Extend a basis \\(u_1,\\ldots,u_k\\) of the kernel to one of \\(V\\) by \\(v_1,\\ldots,v_r\\). Their images span the range, since kernel vectors disappear. They are independent: an image relation makes the corresponding combination of \\(v_i\\) lie in the kernel, contradicting full-basis independence. Thus range dimension is \\(r\\). Restrict \\(S\\) to \\(\\operatorname{ran}T\\); its kernel is \\(\\ker S\\cap\\operatorname{ran}T\\) and its range is \\(\\operatorname{ran}(ST)\\). Rank-nullity gives \\(\\operatorname{rank}(ST)=\\operatorname{rank}T-\\dim(\\ker S\\cap\\operatorname{ran}T)\\), proving the lower bound and one upper bound. The other follows by range containment.",
+      "method": "Restrict to the intermediate range to prove lower bounds.",
+      "pitfall": "You may cancel a rectangular factor only after proving the appropriate injection or surjection.",
+      "definitions": [
+        {
+          "question": "What are the kernel and range?",
+          "answer": "\\(\\ker T=\\{v:T v=0\\}\\) and \\(\\operatorname{ran}T=\\{Tv:v\\in V\\}\\)."
+        },
+        {
+          "question": "What is an invariant subspace?",
+          "answer": "A subspace \\(W\\) such that \\(T(W)\\subset W\\). Reducibility means a proper nonzero invariant subspace exists."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "quotient-dual",
+      "module": "dual",
+      "title": "Quotients, dual maps and annihilators",
+      "kind": "theorem",
+      "statement": "The natural map \\(V/\\ker T\\to\\operatorname{ran}T\\), \\([v]\\mapsto Tv\\), is an isomorphism. For algebraic \\(T^*\\ell=\\ell\\circ T\\), \\(\\ker T^*=(\\operatorname{ran}T)^\\perp\\) and \\(\\operatorname{ran}T^*=(\\ker T)^\\perp\\). In finite dimensions the ranks agree. In these algebraic formulas the perpendicular notation means the annihilator in the dual space, rather than a metric orthogonal complement.",
+      "proof": "The quotient map is well-defined because changing representatives adds a kernel vector; its kernel is the zero coset and it is onto by definition of range. The dual-kernel identity follows by evaluating on every \\(v\\). Each dual image annihilates \\(\\ker T\\). Conversely, a functional \\(h\\) vanishing on that kernel defines a functional on the range by \\(Tv\\mapsto h(v)\\); this is well-defined. Extend a basis of the range to one of \\(W\\) and extend the functional linearly, giving a preimage under \\(T^*\\). For a finite-dimensional subspace \\(S\\subset W\\), basis extension gives \\(\\dim S^\\perp=\\dim W-\\dim S\\). Applying rank-nullity to the dual gives rank equality. Algebraic identities continue with basis extension in infinite dimensions, but the finite-dimension subtraction does not.",
+      "method": "Keep track of which dual space contains each annihilator.",
+      "pitfall": "Algebraic adjoints are not automatically inner-product conjugate transposes.",
+      "definitions": [
+        {
+          "question": "What is the annihilator?",
+          "answer": "\\(S^\\perp=\\{\\ell\\in V^*: \\ell(s)=0\\text{ for all }s\\in S\\}\\)."
+        },
+        {
+          "question": "What is the dual basis?",
+          "answer": "The functionals \\(e^i\\) with \\(e^i(e_j)=\\delta_{ij}\\)."
+        },
+        {
+          "question": "What is the algebraic dual?",
+          "answer": "\\(V^*\\) is the vector space of linear maps from \\(V\\) to the scalar field."
+        },
+        {
+          "question": "What is an annihilator?",
+          "answer": "For \\(W\\) contained in \\(V\\), \\(W^0=\\{\\ell\\in V^*: \\ell(w)=0\\text{ for all }w\\in W\\}\\)."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "determinants",
+      "module": "determinants",
+      "title": "Determinants, adjugates and trace",
+      "kind": "theorem",
+      "statement": "The determinant is the alternating multilinear function of columns with \\(\\det I=1\\). It is multiplicative. \\(A\\operatorname{adj}A=\\operatorname{adj}A\\,A=(\\det A)I\\), and \\(\\operatorname{tr}(AB)=\\operatorname{tr}(BA)\\) for compatible rectangular sizes.",
+      "proof": "Multilinear expansion in coordinate columns gives the permutation formula and uniqueness. For fixed \\(A\\), the function of the columns of \\(B\\) given by \\(\\det(AB)\\) is alternating multilinear with value \\(\\det A\\) at \\(I\\); uniqueness gives multiplicativity. Cofactor expansion gives each diagonal entry of \\(A\\operatorname{adj}A\\) as \\(\\det A\\). Its off-diagonal entries are expansions of determinants with a repeated row and are zero; the other identity uses columns. Thus a nonzero determinant gives the inverse adjugate formula. A zero determinant is equivalent to column dependence: a basis of independent columns would give an invertible coordinate map and nonzero determinant by multiplicativity. Finally both product traces are the double sum \\(\\sum_{i,j}a_{ij}b_{ji}\\).",
+      "method": "Trace cyclicity can remove commutators, but cannot freely reorder all factors.",
+      "pitfall": "The cofactor matrix is the transpose of the adjugate, without complex conjugation.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "schur-complement",
+      "module": "determinants",
+      "title": "Block determinants and Schur complements",
+      "kind": "theorem",
+      "statement": "If \\(A\\) is invertible, \\(\\det\\begin{pmatrix}A&B\\\\C&D\\end{pmatrix}=\\det A\\det(D-CA^{-1}B)\\). Also \\(\\det(I+AB)=\\det(I+BA)\\) for compatible rectangular factors.",
+      "proof": "Left multiply by \\(\\begin{pmatrix}I&0\\\\-CA^{-1}&I\\end{pmatrix}\\), whose determinant is one. The product is block upper triangular with diagonal blocks \\(A,D-CA^{-1}B\\), whose determinant is the product by the permutation formula. For the rectangular identity use \\(\\begin{pmatrix}I&A\\\\-B&I\\end{pmatrix}\\), eliminating once with the first identity block and once with the second. The resulting determinants are \\(\\det(I+BA)\\) and \\(\\det(I+AB)\\). Substituting a scalar parameter gives equal nonzero eigenvalue algebraic multiplicities for \\(AB,BA\\), with different zero multiplicities allowed.",
+      "method": "Write every block size and preserve the order \\(CA^{-1}B\\).",
+      "pitfall": "The Schur formula requires invertibility of the eliminated block, not of the entire matrix.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "cauchy-schwarz",
+      "module": "inner",
+      "title": "Cauchy–Schwarz and Hölder inequalities",
+      "kind": "theorem",
+      "statement": "In an inner-product space, \\(|\\langle x,y\\rangle|\\le\\|x\\|\\|y\\|\\), with equality exactly when the vectors are dependent. For conjugate \\(p,q>1\\), \\(\\sum|x_iy_i|\\le\\|x\\|_p\\|y\\|_q\\), and similarly for integrals.",
+      "proof": "For \\(y\\ne0\\), subtract the projection coefficient of \\(x\\) onto \\(y\\). Expanding the nonnegative squared norm gives \\(\\|x\\|^2-|\\langle x,y\\rangle|^2/\\|y\\|^2\\ge0\\); equality occurs exactly when that residual is zero. Zero-vector cases are immediate. For Hölder, convexity of \\(t\\mapsto t^p\\), or its one-variable derivative, gives Young’s inequality \\(ab\\le a^p/p+b^q/q\\) for nonnegative \\(a,b\\): maximize \\(ab-a^p/p\\) in \\(a\\), giving \\(b^q/q\\). Normalize the two norms to one and sum or integrate Young. Undo scaling. For the dual-norm maximizing vector choose \\(x_i=\\operatorname{sgn}(y_i)|y_i|^{q-1}/\\|y\\|_q^{q-1}\\); the identity \\((q-1)p=q\\) gives \\(p\\)-norm one and pairing \\(\\|y\\|_q\\).",
+      "method": "Use the equality case when a norm chain is saturated.",
+      "pitfall": "Complex inner products require conjugation; transpose-only products can vanish on nonzero vectors.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "gram-schmidt",
+      "module": "inner",
+      "title": "Gram–Schmidt, Bessel and orthogonal projection",
+      "kind": "theorem",
+      "statement": "Every independent finite list can be orthonormalized. For orthonormal \\(e_i\\), the projection onto their span is \\(Px=\\sum_i\\langle x,e_i\\rangle e_i\\) in the linear-first convention, and \\(\\sum_i|\\langle x,e_i\\rangle|^2\\le\\|x\\|^2\\).",
+      "proof": "Subtract from the next vector its projections onto earlier orthonormal vectors. The residual is orthogonal to those vectors and nonzero because independence excludes membership in their span; normalize it. Induction preserves every initial span. The projection formula then makes \\(x-Px\\) perpendicular to the span. Pythagoras gives \\(\\|x\\|^2=\\|Px\\|^2+\\|x-Px\\|^2\\), proving Bessel and the contraction bound. For any other vector \\(v\\) in the span, \\(\\|x-v\\|^2=\\|x-Px\\|^2+\\|Px-v\\|^2\\), proving the unique closest-point property. The decomposition shows \\(P^2=P=P^*\\). Conversely a self-adjoint idempotent has orthogonal range and kernel by \\(\\langle Pu,v\\rangle=\\langle u,Pv\\rangle\\), and hence is the orthogonal projection.",
+      "method": "Test a projection inequality on a vector already in one range to kill cross-products.",
+      "pitfall": "Idempotence alone describes oblique projections too.",
+      "definitions": [
+        {
+          "question": "What is an orthogonal complement?",
+          "answer": "\\(W^\\perp=\\{v:\\langle w,v\\rangle=0\\text{ for all }w\\in W\\}\\)."
+        },
+        {
+          "question": "What is an orthonormal basis?",
+          "answer": "A basis whose vectors have pairwise inner products \\(\\delta_{ij}\\)."
+        },
+        {
+          "question": "What is an orthogonal projection?",
+          "answer": "\\(P\\) satisfies \\(P^2=P=P^*\\), projecting onto its range along the orthogonal complement."
+        }
+      ],
+      "visual": "projection"
+    },
+    {
+      "id": "inner-adjoint",
+      "module": "dual",
+      "title": "Inner-product adjoints and representation of functionals",
+      "kind": "theorem",
+      "statement": "In finite-dimensional inner-product spaces each linear map has a unique adjoint satisfying \\(\\langle Tx,y\\rangle=\\langle x,T^*y\\rangle\\). In orthonormal bases it is the conjugate transpose. For \\(\\langle x,y\\rangle_B=\\langle Bx,y\\rangle\\), the weighted adjoint is \\(B^{-1}T^*B\\). The weighted-inner-product formula assumes \\(B\\) is self-adjoint positive definite.",
+      "proof": "In an orthonormal basis, a functional \\(\\ell(x)=\\sum_i a_ix_i\\) is \\(\\langle x,z\\rangle\\) with \\(z_i=\\overline{a_i}\\) under the linear-first convention. Coordinates give existence and uniqueness, proving finite-dimensional Riesz representation. Apply it to \\(x\\mapsto\\langle Tx,y\\rangle\\) for each \\(y\\); the representing vector depends linearly on \\(y\\), giving the adjoint. Expanding matrix coordinates gives conjugate transpose. The defining identity immediately gives \\((ST)^*=T^*S^*\\) and \\((T^{-1})^*=(T^*)^{-1}\\). Moving the positive self-adjoint \\(B\\) through the ordinary inner product gives the weighted formula. Unitarity \\(U^*U=I\\) is exactly norm/inner-product preservation, and in square finite dimension it implies also \\(UU^*=I\\).",
+      "method": "Derive the formula once from the convention instead of guessing where conjugates go.",
+      "pitfall": "\\(A\\) one-sided isometry need not be onto in infinite dimension.",
+      "definitions": [
+        {
+          "question": "What is an adjoint?",
+          "answer": "\\(\\langle Tx,y\\rangle=\\langle x,T^*y\\rangle\\). These lessons use the linear-first convention; the same adjoint identity holds in the other convention."
+        },
+        {
+          "question": "What is an inner product?",
+          "answer": "A positive definite sesquilinear form with conjugate symmetry; over the reals it is a symmetric positive definite bilinear form."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "schur",
+      "module": "spectrum",
+      "title": "Schur triangularization and common eigenvectors",
+      "kind": "theorem",
+      "statement": "Every complex square matrix is unitarily similar to an upper triangular matrix. Commuting complex matrices have a common eigenvector and can be simultaneously triangularized.",
+      "proof": "The fundamental theorem of algebra provides an eigenvalue and unit eigenvector. Extend it to an orthonormal basis. Its span is invariant, so the matrix has upper block form \\(\\begin{pmatrix}\\lambda&*\\\\0&B\\end{pmatrix}\\). Inductively triangularize \\(B\\) by a unitary change on the remaining coordinates. For commuting matrices, an eigenspace of the first is invariant under every other commuting matrix; choose an eigenvector of the restriction of the second, and continue in common eigenspaces for a finite family. This gives a common invariant line. Pass to the quotient and induct to obtain a simultaneous invariant flag, hence triangular form. Infinitely many commuting matrices can be treated by repeatedly restricting to proper invariant eigenspaces until the remaining restrictions are scalar.",
+      "method": "Use triangularization when diagonalization is unavailable.",
+      "pitfall": "Commuting matrices need not be simultaneously diagonalizable without additional hypotheses.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "spectral",
+      "module": "spectrum",
+      "title": "Spectral theorem for normal operators",
+      "kind": "theorem",
+      "statement": "A complex matrix is normal iff it is unitarily diagonalizable. A Hermitian matrix has real eigenvalues; a real symmetric matrix has a real orthonormal eigenbasis.",
+      "proof": "Take Schur form \\(T\\) of a normal matrix. Compare the \\((1,1)\\) entries of \\(TT^*\\) and \\(T^*T\\): the former is the squared norm of row one, the latter is \\(|t_{11}|^2\\), so every remaining entry in row one is zero. The trailing block remains normal. Induction makes all off-diagonal entries zero. Conversely a diagonal matrix commutes with its adjoint, and unitary similarity preserves this. If Hermitian, an eigenpair gives \\(\\lambda\\|v\\|^2=\\langle Av,v\\rangle\\in\\mathbb R\\), so its eigenvalues are real. For real symmetry, a real eigenvector exists for a real eigenvalue by taking a nonzero real or imaginary part; its orthogonal complement is invariant. Real induction gives an orthonormal eigenbasis.",
+      "method": "Spectral diagonalization makes quadratic forms convex combinations of eigenvalues.",
+      "pitfall": "A matrix with all eigenvalues real need not be Hermitian or diagonalizable.",
+      "definitions": [
+        {
+          "question": "What is an eigenvalue and eigenvector?",
+          "answer": "\\(Av=\\lambda v\\) with \\(v\\ne0\\)."
+        },
+        {
+          "question": "What is normality?",
+          "answer": "\\(A^*A=AA^*\\)."
+        },
+        {
+          "question": "What is Hermitian or symmetric?",
+          "answer": "Hermitian means \\(A=A^*\\). Real symmetric means \\(A=A^T\\)."
+        },
+        {
+          "question": "What is a unitary map or isometry?",
+          "answer": "An isometry preserves inner products. A unitary map is a surjective isometry; in finite equal dimensions its matrix satisfies \\(U^*U=UU^*=I\\)."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "minimax",
+      "module": "spectrum",
+      "title": "Rayleigh quotients and Courant–Fischer",
+      "kind": "theorem",
+      "statement": "For Hermitian \\(A\\) with \\(\\lambda_1\\le\\cdots\\le\\lambda_n\\), \\(\\lambda_k=\\min_{\\dim S=k}\\max_{x\\in S\\setminus0}R_A(x)=\\max_{\\dim S=n-k+1}\\min_{x\\in S\\setminus0}R_A(x)\\), where \\(R_A=x^*Ax/(x^*x)\\). Here extrema within subspaces are taken over nonzero vectors, or equivalently the compact unit sphere.",
+      "proof": "In an orthonormal eigenbasis the quotient is \\(\\sum\\lambda_i|c_i|^2/\\sum|c_i|^2\\). Any \\(k\\)-dimensional subspace intersects \\(\\operatorname{span}(e_k,\\ldots,e_n)\\) nontrivially, because their dimensions sum to \\(n+1\\). At such a vector the quotient is at least \\(\\lambda_k\\), so its maximum is at least that value. Taking \\(S=\\operatorname{span}(e_1,\\ldots,e_k)\\) attains equality. The second formula follows by intersecting any (\\(n-k+1\\))-dimensional subspace with \\(\\operatorname{span}(e_1,\\ldots,e_k)\\), and attaining equality with the complementary upper spectral span. For a codimension-one compression these formulas give \\(\\lambda_k(A)\\le\\lambda_k(P_HA|_H)\\le\\lambda_{k+1}(A)\\). For positive definite \\(B\\), substitute \\(z=B^{1/2}x\\) to reduce the generalized quotient to \\(B^{-1/2}AB^{-1/2}\\). The codimension-one operator is the orthogonal compression, since \\(H\\) need not be invariant.",
+      "method": "Keep one eigenvalue ordering throughout; dimension intersections are the core of minimax proofs.",
+      "pitfall": "The minimizing eigenvectors for two matrices generally differ.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "gershgorin",
+      "module": "spectrum",
+      "title": "Gershgorin discs and eigenvalue counting",
+      "kind": "theorem",
+      "statement": "Every eigenvalue of \\(A\\) lies in a row disc \\(|z-a_{ii}|\\le\\sum_{j\\ne i}|a_{ij}|\\). A separated union of \\(k\\) discs contains exactly \\(k\\) eigenvalues counted with algebraic multiplicity.",
+      "proof": "For an eigenvector choose a coordinate with maximal nonzero absolute value. The row equation gives \\(|\\lambda-a_{ii}||v_i|\\le\\sum_{j\\ne i}|a_{ij}||v_j|\\), proving containment. For counting, deform the off-diagonal entries by \\(t\\) in \\([0,1]\\); all discs shrink inside their original discs, so eigenvalues never enter the gap separating the selected union from the other discs. Root multiplicities are stable under small coefficient changes in a region separated from the roots. Here is an elementary justification: roots of a monic polynomial are bounded by 1 plus its largest coefficient modulus (use the geometric sum if a root had larger modulus). For a convergent coefficient sequence, list all \\(n\\) roots with multiplicity, and extract a subsequence on which every listed root converges. Passing to the product factorization shows their limits, with multiplicity, are exactly the roots of the limiting polynomial. A separated region must therefore eventually contain the same number; a sequence of contrary counts would contradict this subsequence argument. Apply this to the continuous characteristic coefficients along the deformation. The integer count is locally constant and hence constant on \\([0,1]\\). At \\(t=0\\) the diagonal matrix has exactly one eigenvalue per selected disc, including repeated centers with multiplicity. Thus the count is \\(k\\) at \\(t=1\\).",
+      "method": "Use the counting refinement to prove simple eigenvalues when the discs are disjoint.",
+      "pitfall": "Containment alone never assigns one eigenvalue to each disc.",
+      "definitions": [],
+      "visual": "gershgorin"
+    },
+    {
+      "id": "cayley-hamilton",
+      "module": "jordan",
+      "title": "Cayley–Hamilton and minimal polynomials",
+      "kind": "theorem",
+      "statement": "Every matrix is annihilated by its characteristic polynomial. There is a unique monic minimal annihilating polynomial, which divides every annihilating polynomial.",
+      "proof": "Write \\(\\operatorname{adj}(tI-A)=\\sum_{j=0}^{n-1}B_jt^j\\). The polynomial identity \\((tI-A)\\operatorname{adj}(tI-A)=p_A(t)I\\) gives coefficient equations. Multiply the equation for degree \\(j\\) by \\(A^j\\) on the left and sum all equations; the terms \\(A^{j+1}B_j\\) cancel with their neighbors, leaving \\(p_A(A)=0\\). This avoids substituting a matrix into an identity with unjustified coefficient commutation. The annihilating polynomials form an ideal: division of any such polynomial by a monic annihilator of smallest degree leaves an annihilating remainder of smaller degree, hence zero. This proves divisibility and uniqueness. For an invertible \\(A\\) the characteristic constant term is nonzero; rearranging Cayley–Hamilton expresses \\(A^{-1}\\) as a polynomial in \\(A\\), with a finite coefficient sum that also covers \\(n=1\\).",
+      "method": "Use annihilating polynomials to prove block restrictions, inverses and diagonalizability.",
+      "pitfall": "Having the same characteristic polynomial generally does not imply similarity.",
+      "definitions": [
+        {
+          "question": "What is the minimal polynomial?",
+          "answer": "The monic polynomial of least degree annihilating \\(A\\)."
+        },
+        {
+          "question": "What is the characteristic polynomial?",
+          "answer": "\\(p_A(t)=\\det(tI-A)\\)."
+        },
+        {
+          "question": "What is similarity?",
+          "answer": "\\(B=S^{-1}AS\\) for invertible \\(S\\): two matrices for the same operator in different bases."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "diagonalizability",
+      "module": "jordan",
+      "title": "Square-free polynomials and generalized eigenspaces",
+      "kind": "theorem",
+      "statement": "Over a field where the minimal polynomial splits, a matrix is diagonalizable iff that polynomial has no repeated root. Its space decomposes as the direct sum of the generalized eigenspaces.",
+      "proof": "For distinct factors \\(q_i(t)=(t-\\lambda_i)^{r_i}\\) of an annihilating polynomial, Bezout/Chinese remainder gives polynomials \\(e_i\\) with \\(\\sum e_i=1\\) modulo their product, \\(e_i=1\\) modulo \\(q_i\\) and zero modulo every other factor. The operators \\(e_i(A)\\) are complementary idempotents whose ranges are exactly \\(\\ker q_i(A)\\). This proves the direct sum; on each range, \\(A\\) is \\(\\lambda_i I+N_i\\) with nilpotent \\(N_i\\). If all exponents are one, these are ordinary eigenspaces and their bases form an eigenbasis. Conversely an eigenbasis means any annihilator must vanish at each eigenvalue, and the product of the distinct linear factors annihilates, proving the minimal polynomial square-free. Bezout follows by the Euclidean algorithm, and the \\(e_i\\) are constructed from the inverses of the complementary factors modulo \\(q_i\\).",
+      "method": "Specify the field and whether the polynomial splits over it.",
+      "pitfall": "A square-free real polynomial with nonreal roots does not imply real diagonalizability.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "jordan",
+      "module": "jordan",
+      "title": "Jordan chains and ranks of powers",
+      "kind": "theorem",
+      "statement": "A complex operator has a basis of Jordan chains. A nilpotent block of size \\(s\\) contributes \\(\\min(k,s)\\) to \\(\\dim\\ker N^k\\), so successive kernel differences count blocks of length at least \\(k\\).",
+      "proof": "Use the preceding generalized-eigenspace decomposition to reduce to a nilpotent \\(N\\). Put \\(K_k=\\ker N^k\\), with \\(K_0=0\\). The induced map \\(K_{k+1}/K_k\\to K_k/K_{k-1}\\) is injective: if Nv lies in \\(K_{k-1}\\), then \\(v\\) lies in \\(K_k\\). Start at the largest nonzero quotient, choose representatives of a basis, and propagate their \\(N\\)-images downward. In each lower quotient these propagated classes are independent by injection; complete them to a basis by choosing additional representatives. Continue down to K1. Each newly selected representative begins a chain, and the resulting chain vectors represent bases of every successive quotient. Induction on the filtration then proves they collectively form a basis of \\(V\\). In reverse order within each chain, \\(N\\) sends each vector to its preceding vector and the first to zero, giving Jordan blocks. The contribution formula follows by checking a single chain. Differences determine numbers of blocks of each length, making the nilpotent form unique. On generalized eigenspaces add back the eigenvalue.",
+      "method": "Use all available ranks or nullities, then check the total dimension and nilpotence index.",
+      "pitfall": "The nilpotence index determines only the largest block, not the whole partition.",
+      "definitions": [
+        {
+          "question": "What is a generalized eigenspace?",
+          "answer": "\\(\\ker(A-\\lambda I)^n\\) for an operator on an \\(n\\)-dimensional space."
+        },
+        {
+          "question": "What is a Jordan chain?",
+          "answer": "Nonzero chain vectors with \\((A-\\lambda I)v_1=0\\) and \\((A-\\lambda I)v_{j+1}=v_j\\)."
+        }
+      ],
+      "visual": "jordan"
+    },
+    {
+      "id": "cyclic",
+      "module": "jordan",
+      "title": "Cyclic vectors and commuting operators",
+      "kind": "theorem",
+      "statement": "If \\(v,Tv,\\ldots,T^{n-1}v\\) is a basis, the minimal polynomial has degree \\(n\\), and every commuting operator is a unique polynomial in \\(T\\) of degree below \\(n\\).",
+      "proof": "An annihilator of degree below \\(n\\) would give a forbidden linear dependence when applied to \\(v\\). Cayley–Hamilton supplies one of degree \\(n\\). If \\(U\\) commutes with \\(T\\), expand \\(Uv=\\sum_{j<n}c_jT^jv\\) and define \\(p(t)=\\sum c_jt^j\\). Then \\(UT^kv=T^kUv=p(T)T^kv\\), so \\(U\\) and \\(p(T)\\) agree on the cyclic basis. A second polynomial representation below degree \\(n\\) would annihilate \\(v\\), and basis independence forces it to be the same polynomial. A single Jordan block is cyclic: the final coordinate vector and its successive shifted-operator powers form its chain basis; ordinary powers are related by an invertible triangular coefficient change.",
+      "method": "Prescribe a commuting operator on one cyclic vector, then propagate by commutation.",
+      "pitfall": "Cyclicity does not imply diagonalizability.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "fitting",
+      "module": "spaces",
+      "title": "Fitting decomposition",
+      "kind": "theorem",
+      "statement": "For a finite-dimensional operator, the space is the invariant direct sum of its nilpotent and invertible parts: \\(V=\\ker T^m\\oplus\\operatorname{ran}T^m\\) for sufficiently large \\(m\\).",
+      "proof": "Kernel dimensions increase and stabilize; once two consecutive kernels agree, applying \\(T\\) proves all later kernels agree. Range dimensions similarly stabilize. Choose \\(m\\) after stabilization. If \\(w=T^mv\\) is also in \\(\\ker T^m\\), then \\(T^{2m}v=0\\), so \\(v\\in\\ker T^m\\) and \\(w=0\\). Rank-nullity makes the dimensions of the two subspaces sum to \\(\\dim V\\), proving the direct sum. Both are invariant. The first restriction is killed by its \\(m\\)th power. The second maps its range onto itself by stabilization, and finite dimension makes that restriction invertible. If \\(T\\) is neither invertible nor nilpotent, both summands are nonzero.",
+      "method": "Use a stabilized power rather than just the first kernel and range.",
+      "pitfall": "\\(\\ker T\\) and \\(\\operatorname{ran}T\\) can have a nonzero intersection.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "positive-square-root",
+      "module": "positive",
+      "title": "Positive definite matrices and square roots",
+      "kind": "theorem",
+      "statement": "A Hermitian matrix is positive definite iff all its eigenvalues are positive. Positive congruence \\(S^*AS\\) preserves definiteness for invertible \\(S\\). Every positive semidefinite matrix has a unique positive semidefinite square root.",
+      "proof": "The spectral quadratic form is \\(\\sum\\lambda_i|c_i|^2\\), proving the eigenvalue criterion. For congruence evaluate it at \\(Sx\\), nonzero iff \\(x\\) is nonzero. Define \\(A^{1/2}=U\\operatorname{diag}(\\sqrt{\\lambda_i})U^*\\). It is positive semidefinite and squares to \\(A\\). For uniqueness, any positive semidefinite root \\(B\\) commutes with \\(A=B^2\\), so preserves each eigenspace of \\(A\\). On the eigenspace with value \\(\\lambda\\), the spectral theorem for \\(B\\) gives nonnegative eigenvalues whose squares equal \\(\\lambda\\), hence \\(B\\) is exactly \\(\\sqrt{\\lambda}\\,I\\) there. If \\(A\\) is positive definite, its inverse and inverse square root are too. Congruence, unlike similarity, is the natural operation on quadratic forms.",
+      "method": "Use \\(A^{-1/2}BA^{-1/2}\\) to compare positive matrices that need not commute.",
+      "pitfall": "Determinant positivity alone does not mean a matrix is positive definite.",
+      "definitions": [
+        {
+          "question": "What is positive semidefinite?",
+          "answer": "\\(A\\) is Hermitian and \\(x^*Ax\\ge0\\) for every \\(x\\). Definite requires strict positivity for nonzero \\(x\\)."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "svd",
+      "module": "positive",
+      "title": "Singular value decomposition",
+      "kind": "theorem",
+      "statement": "For any rectangular complex matrix \\(A\\), there are unitary \\(U\\),\\(V\\) and a rectangular diagonal nonnegative Sigma such that \\(A=U\\Sigma V^*\\). Its positive singular values are the square roots of the positive eigenvalues of \\(A^*A\\).",
+      "proof": "Diagonalize the positive semidefinite Gram matrix with orthonormal eigenvectors \\(v_i\\). For positive eigenvalues \\(s_i^2\\), set \\(u_i=Av_i/s_i\\). Their inner products are \\(u_i^*u_j=v_i^*A^*Av_j/(s_is_j)=\\delta_{ij}\\). Eigenvectors with zero eigenvalue are killed by \\(A\\), since their image norm squared is zero. Extend the \\(u_i\\) to an orthonormal output basis, and use the full \\(v_i\\) input basis. The matrix in these bases is rectangular diagonal with \\(s_i\\), proving the decomposition. Consequently rank is the number of positive \\(s_i\\), \\(\\|A\\|_2=\\max s_i\\), and \\(\\|A\\|_F^2=\\sum s_i^2\\).",
+      "method": "Use singular values for operator norms even when \\(A\\) is not normal.",
+      "pitfall": "Singular values are generally not eigenvalue moduli.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "polar",
+      "module": "positive",
+      "title": "Polar decomposition",
+      "kind": "theorem",
+      "statement": "A square complex matrix has \\(A=UH\\), with \\(H\\) positive semidefinite and \\(U\\) unitary; \\(H\\) is uniquely \\((A^*A)^{1/2}\\). \\(U\\) is unique when \\(A\\) is invertible. Normality is equivalent to \\(U\\) commuting with \\(H\\) for a unitary polar factor.",
+      "proof": "From SVD \\(A=V\\Sigma W^*\\), set \\(H=W\\Sigma W^*\\) and \\(U=VW^*\\). These have the required properties. Any factorization with unitary \\(U\\) gives \\(A^*A=H^2\\), so positive-root uniqueness fixes \\(H\\). When \\(H\\) is invertible, \\(U=AH^{-1}\\) is determined. If \\(A\\) is normal, \\(AA^*=A^*A\\) gives \\(UH^2U^*=H^2\\); uniqueness of the positive square root gives \\(UHU^*=H\\), so \\(U\\) commutes with \\(H\\). Conversely that commutation gives \\(AA^*=UH^2U^*=H^2=A^*A\\). In the singular case unitary extensions may differ on the kernel, while the positive factor is still unique.",
+      "method": "Prove commutation using uniqueness of a positive root, or a normal spectral basis.",
+      "pitfall": "Do not assert uniqueness of the unitary factor when \\(A\\) has a kernel.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "norm-equivalence",
+      "module": "norms",
+      "title": "Finite-dimensional norm equivalence",
+      "kind": "theorem",
+      "statement": "Any two norms on a finite-dimensional vector space bound one another by fixed positive constants and give the same convergence and topology.",
+      "proof": "Choose a basis and let \\(|x|_2\\) be the Euclidean coordinate norm. Triangle and Cauchy–Schwarz give \\(N(x)\\le\\sum|x_i|N(e_i)\\le C|x|_2\\). The reverse triangle inequality then shows \\(N\\) is continuous in Euclidean coordinates, without assuming norm equivalence. On the compact Euclidean unit sphere \\(N\\) has a positive minimum \\(m\\) because it never vanishes there. Homogeneity gives \\(m|x|_2\\le N(x)\\le C|x|_2\\). Apply these two bounds for both chosen norms to obtain equivalence. For \\(n\\)-by-\\(n\\) matrices, \\(\\|A\\|_2\\le\\|A\\|_F\\le\\sqrt n\\|A\\|_2\\) follows from singular values, and \\(\\|A\\|_F\\le\\sum|a_{ij}|\\le n\\|A\\|_F\\) follows from entry Cauchy–Schwarz.",
+      "method": "Use one convenient norm for estimates, then translate convergence by equivalence.",
+      "pitfall": "This conclusion fails on infinite-dimensional spaces.",
+      "definitions": [
+        {
+          "question": "What is an induced matrix norm?",
+          "answer": "\\(\\|A\\|=\\sup_{\\|x\\|=1}\\|Ax\\|\\). It is submultiplicative."
+        },
+        {
+          "question": "What is the Frobenius norm?",
+          "answer": "\\(\\|A\\|_F=(\\sum_{i,j}|a_{ij}|^2)^{1/2}\\)."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "neumann",
+      "module": "norms",
+      "title": "Neumann series and perturbative inversion",
+      "kind": "theorem",
+      "statement": "For a submultiplicative matrix norm with \\(\\|C\\|<1\\), \\(I-C\\) is invertible and \\((I-C)^{-1}=\\sum_{k=0}^\\infty C^k\\).",
+      "proof": "Submultiplicativity bounds \\(\\|C^k\\|\\le\\|C\\|^k\\), so the series is absolutely Cauchy and converges in finite-dimensional matrix space. Multiplying partial sums on either side by \\(I-C\\) gives \\(I-C^{N+1}\\), which tends to \\(I\\). Continuity of multiplication shows the limit is a two-sided inverse. Therefore an invertible \\(A\\) remains invertible under sufficiently small \\(E\\), since \\(A+E=A(I+A^{-1}E)\\). For a nilpotent \\(C\\) the same formula terminates and needs no norm bound. A zero-constant polynomial in a nilpotent matrix is nilpotent; hence a polynomial with a nonzero constant term is invertible.",
+      "method": "Factor on the correct side and check the norm of the ordered perturbation.",
+      "pitfall": "An arbitrary matrix norm need not be submultiplicative.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "matrix-powers",
+      "module": "norms",
+      "title": "Matrix powers and spectral radius",
+      "kind": "theorem",
+      "statement": "\\(A^k\\to0\\) iff all eigenvalues have modulus below one. If one nonzero algebraically simple eigenvalue strictly dominates all others, the normalized powers converge to its rank-one spectral projection.",
+      "proof": "An eigenvector shows necessity: \\(A^kv=\\lambda^kv\\) cannot tend to zero when \\(|\\lambda|\\ge1\\). In Jordan form a block \\(\\lambda I+N\\) has \\((\\lambda I+N)^k=\\sum_{j<r}\\binom kj\\lambda^{k-j}N^j\\), with zero-eigenvalue blocks eventually vanishing. Polynomial growth times a strictly decaying geometric factor tends to zero, proving sufficiency. For a simple dominant eigenvalue \\(\\lambda\\), its block divided by \\(\\lambda^k\\) is one, and every other block decays by the same calculation with modulus ratio below one. Undo similarity to get the rank-one projection. The same estimates show \\(\\lim_k\\|A^k\\|^{1/k}=\\rho(A)\\) in any fixed norm: eigenvectors give the lower bound in an induced norm, Jordan polynomial bounds give the upper bound, and norm equivalence transfers the limit.",
+      "method": "Handle zero eigenvalues separately before dividing by powers of eigenvalues.",
+      "pitfall": "Spectral radius is not submultiplicative for arbitrary matrix products.",
+      "definitions": [
+        {
+          "question": "What is spectral radius?",
+          "answer": "\\(\\rho(A)=\\max_{\\lambda\\in\\sigma(A)}|\\lambda|\\)."
+        }
+      ],
+      "visual": null
+    },
+    {
+      "id": "exponential",
+      "module": "norms",
+      "title": "Matrix exponentials and linear systems",
+      "kind": "theorem",
+      "statement": "The series \\(e^{tA}=\\sum_{k\\ge0}t^kA^k/k!\\) converges locally uniformly, solves \\(E\\prime=AE\\), and has inverse \\(e^{-tA}\\). Also \\(\\det e^A=e^{\\operatorname{tr}A}\\).",
+      "proof": "An induced norm bounds the terms by \\(|t|^k\\|A\\|^k/k!\\), and derivative terms have the same factorial convergence on compact \\(t\\)-intervals. Thus termwise differentiation is valid. For commuting \\(A\\),\\(B\\), multiply the absolutely convergent series and use the binomial identity to get \\(e^{A+B}=e^Ae^B\\), proving the inverse formula. Differentiating \\(e^{-tA}f(t)\\) shows every solution of \\(f'=Af\\) equals \\(e^{tA}f(0)\\). Triangularize \\(A\\); every series power remains triangular and its diagonal exponentials are \\(e^{\\lambda_i}\\). The determinant is their product, giving the trace formula even without diagonalizability. On a nilpotent Jordan block the exponential is a finite polynomial times the scalar exponential.",
+      "method": "Uniform factorial bounds justify manipulation and differentiation of the series.",
+      "pitfall": "\\(e^{A+B}=e^Ae^B\\) requires commutation.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "sylvester",
+      "module": "spectrum",
+      "title": "Sylvester equations and spectral separation",
+      "kind": "theorem",
+      "statement": "The map \\(X\\mapsto AX-XB\\) is invertible exactly when \\(A\\) and \\(B\\) have disjoint complex spectra. In the real Lyapunov equation \\(AX+XA^T=C\\), uniqueness for every real symmetric \\(C\\) is equivalent to no opposite eigenvalue pair of \\(A\\).",
+      "proof": "Under separation, \\(AX=XB\\) implies \\(p(A)X=Xp(B)\\). Set \\(p\\) to the characteristic polynomial of A: Cayley–Hamilton gives \\(Xp(B)=0\\). Triangularizing \\(B\\) shows \\(p(B)\\) has nonzero diagonal entries, so is invertible and \\(X=0\\). A square linear map on matrix space with zero kernel is onto. If spectra overlap, choose a right eigenvector \\(u\\) of \\(A\\) and a left eigenvector row \\(v^T\\) of \\(B\\) at the same eigenvalue. Then the nonzero matrix \\(u\\) \\(v^T\\) belongs to the kernel. For the symmetric real Lyapunov version, a unique full-space solution to symmetric \\(C\\) equals its transpose. Conversely opposite eigenvectors \\(u\\),\\(v\\) of A produce nonzero symmetric \\(uv^T+vu^T\\) in the complex kernel. It is nonzero because a nonzero coordinate of \\(u\\) forces every coordinate of \\(v\\) to vanish if the symmetric product were zero. At least one real or imaginary part is a nonzero real symmetric kernel vector.",
+      "method": "Separate the complex matrix-space argument from the real symmetric necessity argument.",
+      "pitfall": "An arbitrary complex kernel matrix does not automatically prove nonuniqueness among real symmetric solutions.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "quadratic-positivity",
+      "module": "positive",
+      "title": "Testing matrix order by eigenvectors",
+      "kind": "theorem",
+      "statement": "For Hermitian \\(A\\),\\(B\\), \\(A>0\\) and \\(AB+BA>0\\) imply \\(B>0\\). If both \\(A\\),\\(B\\) are positive definite and \\(A^2>B^2\\), then \\(A>B\\).",
+      "proof": "For \\(Bv=\\lambda v\\), evaluate the anticommutator quadratic form: it is \\(2\\lambda v^*Av\\). Both the hypothesis and \\(v^*Av\\) are positive, so \\(\\lambda >0\\). All \\(B\\) eigenvalues are positive. For the difference-of-squares assertion set \\(C=A-B\\) and choose its eigenvector \\(Cv=\\lambda v\\). The ordered identity \\(A^2-B^2=AC+CB\\) gives quadratic form \\(\\lambda v^*(A+B)v\\). Again positivity forces \\(\\lambda >0\\), proving \\(C\\) positive. In the nonstrict anticommutator variant, a negative \\(B\\) direction can sit in \\(\\ker A\\): \\(\\operatorname{diag}(1,0)\\) and \\(\\operatorname{diag}(1,-1)\\) are a counterexample. These proofs use one matrix’s eigenvectors and do not assume simultaneous diagonalization.",
+      "method": "Test the target matrix’s eigenvectors and reduce the desired sign to a scalar.",
+      "pitfall": "Positive matrices need not commute, and difference-of-squares factorizations cannot be reordered.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "commutator-rank-one",
+      "module": "jordan",
+      "title": "Rank-one commutators and a common eigenvector",
+      "kind": "theorem",
+      "statement": "Over \\(\\mathbb C\\), if \\(AB-BA\\) has rank one, \\(A\\) and \\(B\\) have a common eigenvector.",
+      "proof": "Write \\(C=uv^T\\). Induct on word length \\(m\\) to show \\(v^Twu=0\\) for every word in \\(A\\),\\(B\\). At length zero this is \\(\\operatorname{tr}C=0\\). Swapping adjacent \\(AB\\) and \\(BA\\) in a word of length \\(m\\) changes its value by \\((v^Tw_1u)(v^Tw_2u)=0\\), using shorter words. Thus words with \\(i\\) copies of \\(A\\) and \\(j\\) copies of \\(B\\) have one common value \\(\\alpha\\). Expand \\([A^{i+1},B^{j+1}]=\\sum_{r=0}^i\\sum_{s=0}^j A^rB^sCB^{j-s}A^{i-r}\\). Cyclic trace makes every term \\(\\alpha\\), while a commutator has trace zero. Hence \\((i+1)(j+1)\\alpha=0\\), proving the induction in characteristic zero. Now the nonzero span \\(W\\) of all \\(wu\\) is invariant under \\(A\\),\\(B\\) and lies in ker(\\(v^T\\)). Their commutator vanishes on \\(W\\). An eigenspace of \\(A\\) on \\(W\\) is invariant under \\(B\\), and \\(B\\) has an eigenvector there over \\(\\mathbb C\\). This is the required common vector.",
+      "method": "Build an invariant subspace where the commutator vanishes before using the commuting argument.",
+      "pitfall": "The rank-one commutator itself generally does not vanish on the whole space.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "baire",
+      "module": "metric",
+      "title": "Baire category theorem",
+      "kind": "theorem",
+      "statement": "A nonempty complete metric space cannot be a countable union of closed sets with empty interior. Equivalently, a countable intersection of open dense sets is dense.",
+      "proof": "Let \\(U\\) be any nonempty open set and \\(G_n\\) open dense. Choose a closed ball of positive radius at most \\(1/2\\) inside \\(U\\) intersect \\(G_1\\). Inductively choose a closed ball of positive radius at most \\(2^{-n}\\) inside the preceding open ball intersect \\(G_n\\). Density makes that intersection nonempty, and openness supplies the smaller ball. The centers form a Cauchy sequence, since all later centers lie in each earlier ball and its diameter tends to zero. Completeness gives a limit lying in every closed ball, hence in \\(U\\) and every \\(G_n\\). If a chosen point is isolated, its singleton is open and density puts it in every \\(G_n\\), giving the conclusion immediately. Taking complements proves the closed-set formulation.",
+      "method": "When a complete space is covered by countably many closed constraints, at least one constraint holds throughout a nonempty open set.",
+      "pitfall": "Completeness is essential; the rationals are a countable union of closed singletons with empty interior.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "chain-rule",
+      "module": "multivariable",
+      "title": "Chain rule and equality of mixed partials",
+      "kind": "theorem",
+      "statement": "If \\(f\\) is differentiable at a and \\(g\\) at \\(f(a)\\), then \\(D(g\\circ f)(a)=Dg(f(a))Df(a)\\). A \\(C^2\\) scalar function has equal mixed second partials.",
+      "proof": "Write \\(f(a+h)=f(a)+Ah+r(h)\\) with \\(r(h)=o(\\|h\\|)\\). Then \\(k=Ah+r(h)=O(\\|h\\|)\\). Substituting \\(g(f(a)+k)=g(f(a))+Bk+s(k)\\), where \\(s(k)=o(\\|k\\|)\\), yields the derivative \\(BA\\) and remainder \\(Br(h)+s(k)=o(\\|h\\|)\\). For mixed partials take the rectangular difference \\(f(x+h,y+k)-f(x+h,y)-f(x,y+k)+f(x,y)\\). Two applications of the fundamental theorem express it as the double integral of \\(f_{xy}\\), and in the opposite order as that of \\(f_{yx}\\). Divide by \\(hk\\) and let both nonzero increments tend to zero. Continuity of the two second partials makes the averages tend to their values at the point, proving equality.",
+      "method": "Compose linear derivatives in the order the maps act. Restrict to a rectangle within the open domain before using the integral argument.",
+      "pitfall": "Existence of the partial derivatives alone does not imply differentiability or equality of mixed partials.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "hadamard",
+      "module": "inner",
+      "title": "Hadamard’s determinant inequality",
+      "kind": "theorem",
+      "statement": "For a square matrix with columns \\(v_i\\), \\(|\\det A|\\) is at most the product of their Euclidean lengths. For nonzero columns, equality holds exactly when they are mutually orthogonal.",
+      "proof": "If the columns are dependent, the determinant is zero, and equality can hold only if one column is zero. Otherwise apply Gram–Schmidt to get \\(A=QR\\) with \\(Q\\) unitary and \\(R\\) upper triangular. The diagonal entries are the lengths of the successive orthogonal residuals. Each is at most the corresponding column length, with equality exactly when that column was already orthogonal to all earlier columns. Since \\(|\\det Q|=1\\), multiplying the diagonal entries proves the bound and equality criterion. The dependent case with all columns nonzero has strict inequality.",
+      "method": "Apply the column version to \\(A\\) or the row version to its transpose; track equality separately.",
+      "pitfall": "Zero columns make both sides zero without forcing all other columns to be orthogonal.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "cesaro",
+      "module": "sequences",
+      "title": "Cesàro averages and the Cauchy condensation test",
+      "kind": "theorem",
+      "statement": "If \\(a_n\\to a\\), then \\(N^{-1}\\sum_{n=1}^Na_n\\to a\\). If \\(a_n\\ge0\\) decreases, \\(\\sum_{n=1}^\\infty a_n<\\infty\\) iff \\(\\sum_{k=0}^\\infty2^ka_{2^k}<\\infty\\).",
+      "proof": "For the averages, split at \\(N\\) where \\(|a_n-a|<\\varepsilon\\). The contribution of the first \\(N\\) terms divided by the averaging length tends to zero, and the remaining contribution has modulus at most \\(\\varepsilon\\). For condensation, in the block \\(2^k\\le n<2^{k+1}\\), monotonicity gives \\(2^k a_{2^{k+1}}\\le\\sum_{n=2^k}^{2^{k+1}-1}a_n\\le 2^k a_{2^k}\\). Summing over blocks bounds the original series between one half of a shifted condensed series and the condensed series. Nonnegative partial sums are bounded exactly when they converge, giving the equivalence.",
+      "method": "Split into a fixed initial segment and a uniformly controlled tail. For slowly decaying positive terms, group dyadic blocks.",
+      "pitfall": "Convergence of arithmetic averages does not imply convergence of the original sequence.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "lhopital",
+      "module": "differentiation",
+      "title": "Cauchy mean value theorem and \\(L\\)’Hôpital’s rule",
+      "kind": "theorem",
+      "statement": "For real continuous \\(f,g\\) on \\([a,b]\\), differentiable inside, some \\(c\\in(a,b)\\) satisfies \\((f(b)-f(a))g\\prime(c)=(g(b)-g(a))f\\prime(c)\\). If \\(f,g\\to0\\) at an endpoint, \\(g\\prime\\ne0\\) nearby and \\(f\\prime/g\\prime\\to L\\), then \\(f/g\\to L\\), allowing extended real limits.",
+      "proof": "Apply Rolle to \\(h(t)=(f(b)-f(a))(g(t)-g(a))-(g(b)-g(a))(f(t)-f(a))\\), which vanishes at both endpoints. Its zero derivative gives the identity. In the zero-over-zero case, extend both functions continuously to zero at the endpoint. The ordinary mean value theorem makes \\(g\\) nonzero at every nearby interior point, since \\(g'\\) has no zeros. Cauchy’s identity expresses \\(f(x)/g(x)\\) as \\(f'(c)/g'(c)\\) at a point between \\(x\\) and the endpoint. As \\(x\\) approaches that endpoint, so does \\(c\\), proving the limit. For an endpoint at infinity, substitute \\(t=1/x\\) to reduce to a finite endpoint; the derivative ratio is unchanged. The infinity-over-infinity variant can be proved by applying the same identity between a fixed sufficiently late point and \\(x\\): the increment ratio is close to \\(L\\) and the fixed endpoint contributions vanish relative to \\(g(x)\\). For infinite \\(L\\), use arbitrary one-sided bounds instead of an absolute-error estimate.",
+      "method": "Check the indeterminate form and the derivative-ratio limit before applying the rule.",
+      "pitfall": "A limit of derivative ratios alone says nothing without endpoint and denominator hypotheses.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "interpolation",
+      "module": "spaces",
+      "title": "Polynomial interpolation and Vandermonde matrices",
+      "kind": "theorem",
+      "statement": "At \\(n\\ge1\\) distinct scalar nodes \\(t_i\\), there is exactly one polynomial of degree below \\(n\\) with prescribed values. The evaluation matrix in the monomial basis is invertible, with determinant \\(\\prod_{i<j}(t_j-t_i)\\).",
+      "proof": "The polynomials \\(L_i(t)=\\prod_{j\\ne i}\\frac{t-t_j}{t_i-t_j}\\) satisfy \\(L_i(t_j)=\\delta_{ij}\\), so their value-weighted sum gives existence. A difference of two interpolants would have \\(n\\) distinct roots but degree below \\(n\\), hence vanish. The root bound follows by successively factoring (\\(t-t_i\\)) using polynomial division. Thus evaluation is an isomorphism and its monomial matrix is invertible. Its determinant is the Vandermonde product: as a polynomial in the last node it has roots at all previous nodes and leading coefficient the smaller Vandermonde determinant; induction gives \\(\\prod_{i<j}(t_j-t_i)\\).",
+      "method": "Use the evaluation basis to turn conditions at distinct points into coordinates.",
+      "pitfall": "Repeated nodes need derivative conditions and Hermite interpolation instead.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "idempotents",
+      "module": "spaces",
+      "title": "Idempotents and invariant direct sums",
+      "kind": "theorem",
+      "statement": "If \\(P^2=P\\), then \\(V=\\operatorname{ran}P\\oplus\\ker P\\), and \\(P\\) is identity on its range and zero on its kernel. Commuting operators preserve one another’s kernels and eigenspaces.",
+      "proof": "Write \\(v=Pv+(v-Pv)\\). The first summand lies in the range and the second in the kernel. If \\(w\\) is in both, write \\(w=Pu\\) and note \\(Pw=P^2u=Pu=w\\), while \\(Pw=0\\); hence \\(w=0\\). In a basis of the two summands \\(P\\) is \\(\\operatorname{diag}(I,0)\\), so its rank equals its trace in characteristic zero. Conversely a chosen direct sum defines such a projection. If \\(ST=TS\\) and \\(Tv=\\lambda  v\\), then \\(T(Sv)=S(Tv)=\\lambda Sv\\). The same calculation with polynomials of \\(T\\) proves invariance of generalized eigenspaces. Commuting diagonalizable complex operators are simultaneously diagonalizable: decompose into eigenspaces of one, restrict the others, and repeat; each restriction stays diagonalizable because its square-free annihilating polynomial still annihilates it.",
+      "method": "Construct the direct sum explicitly before asserting similarity to a block projection.",
+      "pitfall": "An idempotent need not be an orthogonal projection; self-adjointness is also required.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "operator-norm",
+      "module": "norms",
+      "title": "Induced norms and polarization",
+      "kind": "theorem",
+      "statement": "An induced operator norm satisfies \\(\\|AB\\|\\le\\|A\\|\\|B\\|\\) and \\(|\\|A\\|-\\|B\\||\\le\\|A-B\\|\\). A linear map preserving inner-product norms preserves inner products.",
+      "proof": "For each unit vector, \\(\\|ABx\\|\\le\\|A\\|\\|Bx\\|\\le\\|A\\|\\|B\\|\\). Taking the supremum proves submultiplicativity. The triangle inequality gives \\(\\|A\\|\\le\\|A-B\\|+\\|B\\|\\); swap \\(A\\),\\(B\\) for the reverse bound. In the linear-first convention, expand squared norms to obtain\n\\[\\operatorname{Re}\\langle x,y\\rangle=\\frac{\\|x+y\\|^2-\\|x-y\\|^2}{4},\\qquad\\operatorname{Im}\\langle x,y\\rangle=\\frac{\\|x+iy\\|^2-\\|x-iy\\|^2}{4}.\\]\nNorm preservation and linearity preserve these expressions, hence the full inner product. A square finite-dimensional isometry is injective and therefore onto, so unitary. SVD gives \\(\\|Ax\\|^2=\\sum_i s_i^2|c_i|^2\\) in singular coordinates; taking the maximum over unit vectors proves \\(\\|A\\|_2=\\max_i s_i\\).",
+      "method": "Test unit vectors and use SVD for sharp norm bounds. Keep the convention straight in polarization.",
+      "pitfall": "An isometry in infinite dimension need not be onto.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "spectral-mapping",
+      "module": "spectrum",
+      "title": "Polynomial spectral mapping",
+      "kind": "theorem",
+      "statement": "For a complex square matrix and polynomial \\(p\\), \\(\\sigma(p(A))=p(\\sigma(A))\\). Algebraic multiplicities of eigenvalues with equal images add; eigenspaces can grow.",
+      "proof": "Triangularize \\(A\\) over the complex numbers. Polynomial operations preserve upper triangular form and put \\(p(\\lambda_i)\\) on its diagonal. The characteristic polynomial of \\(p(A)\\) is therefore the product of \\(t-p(\\lambda_i)\\), proving the spectrum and multiplicity statement. Independently, any eigenvector of \\(A\\) with eigenvalue \\(\\lambda\\) is an eigenvector of \\(p(A)\\) with value \\(p(\\lambda )\\). But this implication alone does not give the converse for individual eigenvectors. If a polynomial has simple roots and annihilates \\(A\\), the generalized-eigenspace decomposition shows diagonalizability; repeated roots allow nontrivial Jordan blocks.",
+      "method": "For matrix polynomials, use triangular form to get the full spectrum, then study Jordan blocks for finer information.",
+      "pitfall": "Distinct eigenvalues of \\(A\\) can have the same polynomial image.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "fourier-parseval",
+      "module": "function-series",
+      "title": "Fourier orthogonality and Parseval",
+      "kind": "theorem",
+      "statement": "For any bounded Riemann-integrable complex function on \\([-\\pi,\\pi]\\), let \\(c_k=(2\\pi)^{-1}\\int_{-\\pi}^\\pi f(x)e^{-ikx}\\,dx\\). Then \\(\\sum_{k\\in\\mathbb Z}|c_k|^2=(2\\pi)^{-1}\\int_{-\\pi}^\\pi|f|^2\\). The periodic extension may jump at its endpoints.",
+      "proof": "Use the normalized integral inner product. The exponentials \\(e^{ikx}\\) are orthonormal by direct integration. Orthogonal projection onto their finite span gives the Pythagorean identity \\(\\|f\\|_2^2=\\sum_{|k|\\le N}|c_k|^2+\\|f-S_N\\|_2^2\\). Real trigonometric polynomials form an algebra on the circle, contain constants, and separate points because the pair \\((\\cos x,\\sin x)\\) identifies a circle point. Stone–Weierstrass makes them uniformly dense in real continuous periodic functions; taking real and imaginary parts gives complex density. Given \\(\\varepsilon\\) choose a trigonometric polynomial \\(p\\) with \\(\\|f-p\\|_2<\\varepsilon\\). For \\(N\\) covering its frequencies, the closest-point property of the projection gives \\(\\|f-S_N\\|_2\\le\\|f-p\\|_2<\\varepsilon\\). Thus the remainder norm tends to zero and the Pythagorean identity yields Parseval. This proves convergence in the integral squared norm, without claiming pointwise or uniform convergence of the Fourier partial sums. For bounded Riemann-integrable \\(f\\), first approximate it in the integral squared norm by step functions: the Darboux criterion gives a lower step approximation with arbitrarily small integral absolute error, and boundedness turns this into small squared error. Apply this separately to real and imaginary parts. Replace each of the finitely many step jumps by linear ramps in intervals of arbitrarily small total length; also join the endpoint values to obtain a continuous periodic function. The modifications stay bounded and have arbitrarily small squared integral error. Thus continuous periodic functions, and consequently trigonometric polynomials, are dense for each such \\(f\\). The same projection argument proves Parseval for this larger class, including a noninteger exponential restricted to the interval.",
+      "method": "Compute coefficients with integration by parts, then use Parseval to convert an integral norm into a numerical series.",
+      "pitfall": "Parseval does not imply uniform convergence of the Fourier series.",
+      "definitions": [],
+      "visual": null
+    },
+    {
+      "id": "darboux-derivative",
+      "module": "differentiation",
+      "title": "Darboux’s theorem for derivatives",
+      "kind": "theorem",
+      "statement": "If \\(f\\) is differentiable on an interval, its derivative has the intermediate value property: between any two derivative values it assumes every intermediate value. Continuity of the derivative is unnecessary.",
+      "proof": "Let \\(a<b\\) and let \\(\\lambda\\) lie strictly between \\(f'(a)\\) and \\(f'(b)\\). Define \\(h(x)=f(x)-\\lambda x\\) on \\([a,b]\\). If \\(h'(a)<0<h'(b)\\), small inward increments at each endpoint lower the value, so neither endpoint minimizes \\(h\\). Continuity and compactness give an interior minimum \\(c\\), where \\(h'(c)=0\\) by Fermat. Thus \\(f'(c)=\\lambda\\). If the signs are reversed, use an interior maximum. Endpoint derivative values in the statement may be interpreted as derivatives at interior points of the original domain; the interval between them is a compact subinterval. This proves every intermediate value occurs without imposing continuous derivatives. More generally a function with the Darboux property maps every interval to an interval, by the definition of that property.",
+      "method": "When derivative continuity is unavailable, extremize \\(f(x)-\\lambda x\\) instead of applying the ordinary intermediate value theorem to \\(f'\\).",
+      "pitfall": "The intermediate value property does not imply continuity: derivatives can be discontinuous.",
+      "definitions": [
+        {
+          "question": "What is the Darboux property?",
+          "answer": "Whenever \\(a<b\\) and \\(\\lambda\\) lies between \\(f(a)\\) and \\(f(b)\\), some \\(c\\) in \\([a,b]\\) has \\(f(c)=\\lambda\\)."
+        }
+      ],
+      "visual": null
+    }
+  ]
+}
