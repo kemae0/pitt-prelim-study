@@ -13,7 +13,3 @@ A study app for the University of Pittsburgh mathematics Ph.D. preliminary exams
 - Progress saved in your browser, with export, import, and reset options. No account required.
 
 Exams come from [Pitt’s sample preliminary exam archive](https://www.mathematics.pitt.edu/graduate/graduate-handbook/sample-preliminary-exams).
-
-`.github/workflows/neocities.yml` publishes this app on every push to `main`.
-It stages the app under `public/pitt-prelim-study/`, uploads changed files,
-and leaves other Neocities files in place (`cleanup: false`).
